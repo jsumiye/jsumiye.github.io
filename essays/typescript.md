@@ -4,7 +4,7 @@ type: essay
 title: "An Upgraded JavaScript"
 # All dates must be YYYY-MM-DD format!
 date: 2024-09-03
-published: true
+published: false
 labels:
   - JavaScript
   - TypeScript

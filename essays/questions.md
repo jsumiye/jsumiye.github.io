@@ -4,7 +4,7 @@ type: essay
 title: "Insightful Inqueries"
 # All dates must be YYYY-MM-DD format!
 date: 2024-09-11
-published: true
+published: false
 labels:
   - Stack Overflow
 ---

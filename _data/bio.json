@@ -21,20 +21,20 @@
   "skills": [
     {
         "name": "Languages and Frameworks",
-        "keywords": [ "Javascript (React, jQuery)", "PHP", "Python (Flask)", "Java", "TypeScript" ]
+        "keywords": [ "JavaScript (React, Next.js, Vite, jQuery)", "TypeScript", "PHP", "Python (Flask)", "Java" ]
     },
     {
         "name": "Libraries",
-        "keywords": ["Material UI", "Bootstrap 5", "jQueryUI"]
+        "keywords": ["Material UI", "Bootstrap 5", "Shadcn/UI", "jQueryUI"]
         
     },
     {
       "name": "Databases and Servers",
-      "keywords": [ "MySQL", "Heroku", "Apache" ]
+      "keywords": [ "MySQL", "Vercel", "Heroku", "Apache" ]
     },
     {
-        "name": "Toolsets/OS",
-        "keywords": [ "Windows 10/11", "Git/GitHub", "VSCode" ]
+        "name": "General Skills",
+        "keywords": [ "GitHub", "Full-Stack Web Development", "RESTful API Integration", "Responsive Design", "Database Management" ]
     }
 
   ],
@@ -47,10 +47,12 @@
       "startDate": "2023-09-01",
       "endDate": "2027-05-01",
       "courses": [
-        "ICS211: Data Structures",
-        "ICS212: Program Structure",
-        "ICS311: Algorithms (Concurrent)",
-        "ICS314: Software Engineering (Concurrent)"
+        "Data Structures",
+        "Discrete Mathematics",
+        "Program Structure",
+        "Linear Algebra & Differential Equations (Concurrent)",
+        "Algorithms (Concurrent)",
+        "Software Engineering (Concurrent)"
       ]
     },
     {
