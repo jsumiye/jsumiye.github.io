@@ -1,8 +1,1735 @@
----
-title: Home
-layout: home
----
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Justin Sumiye — Full Stack Developer</title>
+    <meta
+      name="description"
+      content="Justin Sumiye is a full stack developer in Honolulu, Hawaii, building useful, well-crafted web applications with modern tools."
+    />
 
-{% include about/about.html %}
-{% include projects/projects.html limit=4 %}
-{% include essays/essays.html limit=6 %}
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/5d0479de92.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/portfoliofavicon.png" />
+  </head>
+
+  <body>
+    <!-- Starfield Background -->
+    <div class="starfield" id="starfield"></div>
+
+    <!-- Fixed Social Links -->
+    <div class="social-sidebar">
+      <a href="https://www.linkedin.com/in/jsumiye" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a href="https://github.com/jsumiye" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="mailto:portfolio@practicalsoftware.com" class="social-link" aria-label="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+
+    <!-- Bowling Animation -->
+    <div class="bowling-animation" aria-hidden="true">
+      <div class="bowling-ball ball-1">
+        <svg class="icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="#e53935" />
+          <circle cx="24" cy="24" r="4" fill="#222" />
+          <circle cx="36" cy="20" r="4" fill="#222" />
+          <circle cx="40" cy="32" r="4" fill="#222" />
+        </svg>
+      </div>
+      <div class="bowling-pin pin-1">
+        <svg class="icon" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 0 C25 0 18 8 18 20 C18 32 22 44 22 52 C14 68 14 88 18 104 C20 112 24 116 32 116 C40 116 44 112 46 104 C50 88 50 68 42 52 C42 44 46 32 46 20 C46 8 39 0 32 0 Z"
+            fill="#fff"
+            stroke="#ccc"
+            stroke-width="2"
+          />
+          <path d="M18 36 H46 V44 H18 Z" fill="#d00" />
+        </svg>
+      </div>
+      <div class="bowling-pin pin-2">
+        <svg class="icon" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 0 C25 0 18 8 18 20 C18 32 22 44 22 52 C14 68 14 88 18 104 C20 112 24 116 32 116 C40 116 44 112 46 104 C50 88 50 68 42 52 C42 44 46 32 46 20 C46 8 39 0 32 0 Z"
+            fill="#fff"
+            stroke="#ccc"
+            stroke-width="2"
+          />
+          <path d="M18 36 H46 V44 H18 Z" fill="#d00" />
+        </svg>
+      </div>
+      <div class="bowling-pin pin-3">
+        <svg class="icon" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 0 C25 0 18 8 18 20 C18 32 22 44 22 52 C14 68 14 88 18 104 C20 112 24 116 32 116 C40 116 44 112 46 104 C50 88 50 68 42 52 C42 44 46 32 46 20 C46 8 39 0 32 0 Z"
+            fill="#fff"
+            stroke="#ccc"
+            stroke-width="2"
+          />
+          <path d="M18 36 H46 V44 H18 Z" fill="#d00" />
+        </svg>
+      </div>
+      <div class="bowling-pin pin-4">
+        <svg class="icon" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 0 C25 0 18 8 18 20 C18 32 22 44 22 52 C14 68 14 88 18 104 C20 112 24 116 32 116 C40 116 44 112 46 104 C50 88 50 68 42 52 C42 44 46 32 46 20 C46 8 39 0 32 0 Z"
+            fill="#fff"
+            stroke="#ccc"
+            stroke-width="2"
+          />
+          <path d="M18 36 H46 V44 H18 Z" fill="#d00" />
+        </svg>
+      </div>
+      <div class="bowling-pin pin-5">
+        <svg class="icon" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 0 C25 0 18 8 18 20 C18 32 22 44 22 52 C14 68 14 88 18 104 C20 112 24 116 32 116 C40 116 44 112 46 104 C50 88 50 68 42 52 C42 44 46 32 46 20 C46 8 39 0 32 0 Z"
+            fill="#fff"
+            stroke="#ccc"
+            stroke-width="2"
+          />
+          <path d="M18 36 H46 V44 H18 Z" fill="#d00" />
+        </svg>
+      </div>
+      <div class="bowling-pin pin-6">
+        <svg class="icon" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 0 C25 0 18 8 18 20 C18 32 22 44 22 52 C14 68 14 88 18 104 C20 112 24 116 32 116 C40 116 44 112 46 104 C50 88 50 68 42 52 C42 44 46 32 46 20 C46 8 39 0 32 0 Z"
+            fill="#fff"
+            stroke="#ccc"
+            stroke-width="2"
+          />
+          <path d="M18 36 H46 V44 H18 Z" fill="#d00" />
+        </svg>
+      </div>
+      <div class="bowling-pin pin-7">
+        <svg class="icon" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 0 C25 0 18 8 18 20 C18 32 22 44 22 52 C14 68 14 88 18 104 C20 112 24 116 32 116 C40 116 44 112 46 104 C50 88 50 68 42 52 C42 44 46 32 46 20 C46 8 39 0 32 0 Z"
+            fill="#fff"
+            stroke="#ccc"
+            stroke-width="2"
+          />
+          <path d="M18 36 H46 V44 H18 Z" fill="#d00" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <span class="brand-text">Justin Sumiye</span>
+        </div>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#hero" class="nav-link" data-section="hero">Home</a>
+          <a href="#about" class="nav-link" data-section="about">About</a>
+          <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+          <a href="#work" class="nav-link" data-section="work">Work</a>
+          <a href="#projects" class="nav-link" data-section="projects"
+            >Projects</a
+          >
+          <a
+            href="mailto:portfolio@practicalsoftware.com"
+            class="nav-link contact-btn"
+            >Contact</a
+          >
+        </div>
+        <div class="nav-toggle" id="nav-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="nebula-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow">Full Stack Developer</span>
+        <h1 class="hero-title">
+          <span class="title-line">Justin Sumiye</span>
+        </h1>
+        <p class="hero-subtitle">
+          I build useful, well-crafted web applications — from front-end
+          interfaces to back-end systems. Based in Honolulu, Hawaii.
+        </p>
+        <div class="hero-cta">
+          <button class="btn-primary" onclick="scrollToSection('projects')">
+            <span>View my work</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <a href="mailto:portfolio@practicalsoftware.com" class="btn-ghost">
+            Get in touch
+          </a>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>
+              I began coding at eight with Scratch and LEGO robotics, and I
+              instantly fell in love with computers.
+            </p>
+            <p>
+              Fast-forward to today, I am experienced in both front-end and
+              back-end development, turning my childhood curiosity into a
+              passion for creating useful websites and software.
+            </p>
+            <p>
+              Currently, I am studying computer science at the University of
+              Hawaii at Manoa with focus in cybersecurity.
+            </p>
+
+            <div class="interests">
+              <h3>Also Seen Enjoying...</h3>
+              <div class="interest-grid">
+                <div class="interest-item">
+                  <i class="fas fa-bowling-ball"></i>
+                  <span>Bowling</span>
+                </div>
+                <div class="interest-item">
+                  <i class="fas fa-gamepad"></i>
+                  <span>Gaming</span>
+                </div>
+                <div class="interest-item">
+                  <i class="fas fa-music"></i>
+                  <span>Music</span>
+                </div>
+                <div class="interest-item">
+                  <i class="fas fa-plane-departure"></i>
+                  <span>Traveling</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="about-image">
+            <div class="image-container">
+              <img
+                src="/images/justin-klfc-c.jpg"
+                alt="Justin Sumiye"
+                class="profile-image"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2 class="section-title">Skills</h2>
+
+        <div class="skills-category">
+          <h3>Languages and Frameworks:</h3>
+          <div class="skills-grid">
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <i class="fab fa-square-js"></i>
+                  </div>
+                  <span>JavaScript</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img
+                      src="/images/Typescript_logo_2020.svg.png"
+                      alt="TypeScript"
+                    />
+                  </div>
+                  <span>TypeScript</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <i class="fab fa-php"></i>
+                  </div>
+                  <span>PHP</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <i class="fab fa-react"></i>
+                  </div>
+                  <span>React</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item nextjs">
+                  <div class="skill-icon">
+                    <img src="/images/next-js.svg" alt="Next.js" />
+                  </div>
+                  <span>Next.js</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <i class="fab fa-python"></i>
+                  </div>
+                  <span>Python</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3>Libraries:</h3>
+          <div class="skills-grid">
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img
+                      src="/images/png-transparent-material-ui-logo.png"
+                      alt="Material UI"
+                    />
+                  </div>
+                  <span>Material UI</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <i class="fab fa-bootstrap"></i>
+                  </div>
+                  <span>Bootstrap 5</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img
+                      src="/images/shadcn-ui-logo-png_seeklogo-519786.png"
+                      alt="ShadcnUI"
+                    />
+                  </div>
+                  <span>ShadcnUI</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="/images/jquery-icon.png" alt="jQuery" />
+                  </div>
+                  <span>jQuery</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3>Databases:</h3>
+          <div class="skills-grid">
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="/images/MySQL-Logo.wine.svg" alt="MySQL" />
+                  </div>
+                  <span>MySQL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3>Servers & Deployment:</h3>
+          <div class="skills-grid">
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/vercel/white" alt="Vercel" />
+                  </div>
+                  <span>Vercel</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/railway/white" alt="Railway" />
+                  </div>
+                  <span>Railway</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/apache/white" alt="Apache" />
+                  </div>
+                  <span>Apache</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3>Tools:</h3>
+          <div class="skills-grid">
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/git/white" alt="Git" />
+                  </div>
+                  <span>Git</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/github/white" alt="GitHub" />
+                  </div>
+                  <span>GitHub</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/githubactions/white" alt="GitHub Actions" />
+                  </div>
+                  <span>GitHub Actions</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="/images/vscode.svg" alt="VS Code" />
+                  </div>
+                  <span>VS Code</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item npm">
+                  <div class="skill-icon">
+                    <img src="/images/Npm-logo.svg.png" alt="npm" />
+                  </div>
+                  <span>npm</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/curl/white" alt="cURL" />
+                  </div>
+                  <span>cURL</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card2">
+                <div class="skill-item">
+                  <div class="skill-icon">
+                    <img src="/images/Vitejs-logo.svg.png" alt="Vite" />
+                  </div>
+                  <span>Vite</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="work" class="work">
+      <div class="container">
+        <h2 class="section-title">Work Experience</h2>
+        <div class="work-content">
+                    <div class="card">
+            <div class="card2">
+              <div class="work-header">
+                <h3>Full Stack Software Engineer - Practical Software</h3>
+                <p class="work-period">May 2025 - Present</p>
+              </div>
+              <div class="work-body">
+                <ul class="work-responsibilities">
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Architected and delivered a full stack survey platform covering builder, taker, and reporting modules, demonstrating comprehensive system design and implementation capabilities across the entire application stack.
+                  </li>
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Designed relational database schema and wrote migrations with backward compatibility for evolving features, ensuring data integrity and seamless system evolution while maintaining existing functionality.
+                  </li>
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Implemented application security practices including role based access control, input validation, establishing robust security measures to protect user data and system integrity.
+                  </li>
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Set up continuous integration for build, test, and deployment across development, staging, and production environments, streamlining the development workflow.
+                  </li>
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Maintained regular client communication through emails, online meetings, changelogs, and issue tracking systems, ensuring transparent project progress and timely delivery of client requirements.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card2">
+              <div class="work-header">
+                <h3>Web Developer - Korean Flagship Center</h3>
+                <p class="work-period">September 2023 - Present</p>
+              </div>
+              <div class="work-body">
+                <ul class="work-responsibilities">
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Developed a PHP web application that automates the creation
+                    of decision letters for student applicants using the FPDF
+                    library. This user-friendly tool generates official decision
+                    letters with branded letterhead in PDF format, facilitating
+                    a swift and professional communication process with
+                    applicants.
+                  </li>
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Successfully rebuilt the organization's application form
+                    through integration with a third-party software,
+                    streamlining the submission process for applicants. This
+                    enhancement contributed to increased efficiency and a more
+                    user-friendly application experience.
+                  </li>
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Developed and deployed a Vite + React-based Korean Culture trivia application that achieved significant user engagement with 150+ plays. Implemented modern frontend architecture, responsive design principles, and gamification elements to create an immersive learning experience.
+                  </li>
+                  <li>
+                    <i class="fas fa-angles-right"></i>
+                    Designed and built an interactive Korean company simulation webpage for KOR411 curriculum, featuring authentic job listings and application workflows. Students engage with real-world business scenarios through structured email-based job applications, preparing them for international business environments.
+                    Currently integrating AI automation through n8n platform to optimize job application workflows and reduce professor workload.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+          
+          <!-- (TMSS) Project -->
+          <div class="card">
+            <div class="card2">
+              <div class="project-image">
+                <div class="image-carousel">
+                  <img
+                    src="/images/Survey-Manage.png"
+                    alt="Survey Management"
+                    class="carousel-image active"
+                  />
+                  <img
+                    src="/images/Survey-Report.png"
+                    alt="Survey Report"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/Survey-Data.png"
+                    alt="Data Management"
+                    class="carousel-image"
+                  />
+                  <button class="carousel-btn prev">‹</button>
+                  <button class="carousel-btn next">›</button>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>Survey and Report Management Software</h3>
+                <p>
+                  A comprehensive survey and report management webapp for K-12 educational institutions with visual survey builder, data management, and highly customizable PDF report generation with templating options.
+                </p>
+                <div class="tech-stack">
+                  <span>PHP</span>
+                  <span>MySQL</span>
+                  <span>JavaScript</span>
+                  <span>Bootstrap 5</span>
+                  <span>Survey JS</span>
+                  <span>DataTables JS</span>
+                  <span>jsPDF</span>
+                </div>
+                <div class="project-details">
+                  <ul>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Visual survey builder with SurveyJS integration and controlled question palettes
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Legacy QST file parser and CSV data pipeline for modernizing existing survey systems
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      PDF report generation with professional templates and multi-survey comparisons
+                    </li>
+                  </ul>
+                  <div class="project-links">
+                    <button
+                      class="btn-secondary accordion-toggle"
+                      data-target="#tmss-accordion"
+                      aria-controls="tmss-accordion"
+                    >
+                      <i class="fas fa-chevron-down accordion-icon"></i>
+                      Learn More
+                    </button>
+                    <span class="btn-secondary disabled">
+                      <i class="fas fa-lock"></i>
+                      Private Company Project
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- TMSS Accordion Row -->
+          <div id="tmss-accordion" class="accordion">
+            <div class="accordion-content">
+              <h4>
+                <strong>Note</strong>: This is a private company project for K-12 educational survey management.
+              </h4>
+              <h3>Overview</h3>
+              <p>
+                This is a comprehensive web platform that streamlines K-12 survey operations from creation to reporting. It features a visual survey builder, secure data management, and highly customizable PDF report generation with templating options. The platform excels at converting legacy survey formats, ensuring data integrity, and enabling scalable multi-year educational research.
+              </p>
+              <br />
+              <h3>Key Features</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <h4>Survey Management</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Visual Survey Builder</strong>: SurveyJS integration with controlled toolbox and category-based question palettes
+                </li>
+                <li>
+                  <strong>Legacy File Ingestion</strong>: QST + optional CSV/DAT conversion pipeline with progressive enabling of metadata fields
+                </li>
+                <li>
+                  <strong>Scheduling & Lifecycle Controls</strong>: Future activation (opens_at), expiration management, visibility states (private/unlisted/public badges)
+                </li>
+                <li>
+                  <strong>Secure Sharing</strong>: Slug-based public links with clipboard copy and graceful fallback UI
+                </li>
+              </ul>
+              <br />
+              <h4>Security Features</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>CSRF Protection</strong>: Double submit cookie protection on all state-changing endpoints
+                </li>
+                <li>
+                  <strong>XSS Protection</strong>: Protects against malicious attacks with appropriate sanitization and escaping
+                </li>
+                <li>
+                  <strong>Input Validation</strong>: Protects against malicious attacks with appropriate sanitization and escaping
+                </li>
+                <li>
+                  <strong>SQL Injection Protection</strong>: Prepared statements (via PDO) with parameterized queries
+                </li>
+                <li>
+                  <strong>Role-Based Access</strong>: Limits access to sensitive data
+                </li>
+      
+                <li>
+                  <strong>CSP</strong>: Strict Content Security Policy with appropriate directives
+                </li>
+                <li>
+                  <strong>CORS</strong>: Strict Cross-Origin Resource Sharing with appropriate directives
+                </li>
+              </ul>
+              <br />
+              <h4>Data Management</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Data Quality Enforcement</strong>: Front-end validation & server-assisted CSV schema checks with contextual error surfacing
+                </li>
+                <li>
+                  <strong>Bulk Operations</strong>: Password management and response data handling with full replace semantics
+                </li>
+                <li>
+                  <strong>Dynamic Autocomplete</strong>: School + state autofill with real-time suggestion lists and keyboard navigation
+                </li>
+                <li>
+                  <strong>Efficient Table UX</strong>: DataTables integration with sorting, paging, custom filters, and semantic badges
+                </li>
+              </ul>
+              <br />
+              <h4>Reporting & Analytics</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Reporting Intelligence</strong>: Auto-detection of cross-survey question alignment for comparison charts
+                </li>
+                <li>
+                  <strong>Adaptive Chart/Data Layer</strong>: Dynamically builds field & choice mappings including matrix row flattening
+                </li>
+                <li>
+                  <strong>PDF Generation Pipeline</strong>: html2canvas + jsPDF for consistent letter-size paginated outputs with fixed headers/footers
+                </li>
+                <li>
+                  <strong>Template System</strong>: Page vs Advanced templates with filtered gallery, duplication & rename flows
+                </li>
+              </ul>
+              <br />
+            </div>
+          </div>
+          <!-- Tube Reader Project -->
+          <div class="card">
+            <div class="card2">
+              <div class="project-image">
+                <div class="image-carousel">
+                  <img
+                    src="/images/Dashboard-TubeReader.png"
+                    alt="TubeReader Dashboard"
+                    class="carousel-image active"
+                  />
+                  <img
+                    src="/images/Explore-TubeReader.png"
+                    alt="TubeReader Explore"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/Generate-TubeReader.png"
+                    alt="TubeReader Generate"
+                    class="carousel-image"
+                  />
+                  <button class="carousel-btn prev">‹</button>
+                  <button class="carousel-btn next">›</button>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>TubeReader</h3>
+                <p>
+                  A full-stack web application that transforms YouTube videos
+                  into fully formatted blog articles with customizable features.
+                </p>
+                <div class="tech-stack">
+                  <span>React</span>
+                  <span>JavaScript</span>
+                  <span>PHP</span>
+                  <span>Material UI</span>
+                  <span>OpenAI API</span>
+                </div>
+                <div class="project-details">
+                  <ul>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Customizable article generation with tone and theme
+                      options
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Public, unlisted, and private article visibility controls
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Integration with YouTube Transcript and Data APIs
+                    </li>
+                  </ul>
+                  <div class="project-links">
+                    <button
+                      class="btn-secondary accordion-toggle"
+                      data-target="#tubereader-accordion"
+                      aria-controls="tubereader-accordion"
+                    >
+                      <i class="fas fa-chevron-down accordion-icon"></i>
+                      Learn More
+                    </button>
+                    <a
+                      href="https://tubereader.practicalsoftware.com"
+                      target="_blank"
+                      class="btn-secondary"
+                    >
+                      <i class="fas fa-external-link-alt"></i>
+                      Limited Demo
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- TubeReader Accordion Row -->
+          <div id="tubereader-accordion" class="accordion">
+            <div class="accordion-content">
+              <h4>
+                <strong>Note</strong>: TubeReader is on hold until other
+                important work is completed.
+              </h4>
+              <h3>Overview</h3>
+              <p>
+                TubeReader is a full-stack web application I developed that
+                transforms YouTube videos into fully formatted blog articles,
+                catering to creators, developers, and everyday users. This
+                project allows users to input YouTube URLs and generate articles
+                with customizable features, including public, unlisted, and
+                private options, as well as article tone adjustments. TubeReader
+                provides a user-friendly experience, with an easy-to-use
+                interface.
+              </p>
+              <br />
+              <h3>Key Features</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Customizable Article Generation</strong>: Choose from
+                  multiple options for title, font, tone, theme, length, and
+                  language.
+                </li>
+                <li>
+                  <strong>Article Tone Adjustment</strong>: Select the tone of
+                  the generated articles to match your brand or audience.
+                </li>
+                <li>
+                  <strong>Public, Unlisted, and Private Options</strong>:
+                  Control the visibility of generated articles based on your
+                  preferences.
+                </li>
+                <li>
+                  <strong>Batch Uploading</strong>: Soon to be available,
+                  allowing for multiple videos to be processed simultaneously.
+                </li>
+                <li>
+                  <strong>Support for Longer Videos</strong>: Upcoming feature
+                  to handle extended video content efficiently.
+                </li>
+              </ul>
+              <br />
+              <h3>APIs Used</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong
+                    >YouTube Transcript API (Self-Hosted Flask API on Railway)</strong
+                  >: Provides the text transcripts of YouTube videos, which are
+                  essential for converting spoken content into written articles.
+                </li>
+                <li>
+                  <strong
+                    ><a
+                      href="https://platform.openai.com/docs/overview"
+                      target="_blank"
+                      >OpenAI Completions API</a
+                    ></strong
+                  >: Powers the content generation and enhancement of articles
+                  using OpenAI's GPT-5-mini model. It also aids in
+                  evaluating the appropriateness of custom article titles to
+                  ensure they are suitable for most ages.
+                </li>
+                <li>
+                  <strong
+                    ><a
+                      href="https://developers.google.com/youtube/v3"
+                      target="_blank"
+                      >YouTube Data V3</a
+                    ></strong
+                  >: Retrieves detailed information about YouTube videos, such
+                  as titles, descriptions, and thumbnail images, which aids in
+                  accurately representing and summarizing video content.
+                </li>
+                <li>
+                  <strong
+                    ><a href="https://docs.usercheck.com/" target="_blank"
+                      >UserCheck API</a
+                    ></strong
+                  >: Checks email addresses to identify and filter out
+                  disposable email addresses, ensuring that user registrations
+                  are valid.
+                </li>
+              </ul>
+              <br />
+              <h3>Learning Experience</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <p>
+                Throughout development, I learned what it means to create a
+                fully-functional SAAS web application from the ground up, having
+                to consider client's potential needs and beneficial features
+                that add to the functionality of the application. Additionally,
+                I was able to deepen my understanding of functional programming
+                concepts (JavaScript), React, PHP, and managing complex API
+                integrations.
+              </p>
+              <br />
+              <h3>Technical Implementation</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <p>
+                <strong>Note</strong>:
+                <a
+                  href="https://www.tubereader.practicalsoftware.com/dashboard/"
+                  target="_blank"
+                  >Dashboard</a
+                >
+                (Requires Login) and
+                <a
+                  href="https://www.tubereader.practicalsoftware.com/explore/"
+                  target="_blank"
+                  >Explore</a
+                >
+                pages are dynamically rendered with React using Material UI,
+                Material UI X, and SwiperJS.
+              </p>
+            </div>
+          </div>
+          <!-- Hawaii Open Data Explorer Project -->
+          <div class="card">
+            <div class="card2">
+              <div class="project-image">
+                <div class="image-carousel">
+                  <img
+                    src="/images/OOL-Main.png"
+                    alt="Hawaii Open Data Explorer - Main"
+                    class="carousel-image active"
+                  />
+                  <img
+                    src="/images/OOL-Table.png"
+                    alt="Hawaii Open Data Explorer - Table"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/OOL-Graph.png"
+                    alt="Hawaii Open Data Explorer - Graph"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/OOL-Info.png"
+                    alt="Hawaii Open Data Explorer - Info"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/OOL-Chat.png"
+                    alt="Hawaii Open Data Explorer - Chat"
+                    class="carousel-image"
+                  />
+                  <button class="carousel-btn prev">‹</button>
+                  <button class="carousel-btn next">›</button>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>Hawaii Open Data Explorer</h3>
+                <p>
+                  A comprehensive explorer for Hawaii government datasets with
+                  powerful search, filtering, and interactive visualizations.
+                </p>
+                <div class="tech-stack">
+                  <span>Next.js</span>
+                  <span>TypeScript</span>
+                  <span>Tailwind CSS</span>
+                  <span>Shadcn/ui</span>
+                  <span>OpenAI API</span>
+                </div>
+                <div class="project-details">
+                  <ul>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Finalist in the 2024 Hawaii Annual Code Challenge (HACC)
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Fast dataset search with sorting, filtering, bookmarks,
+                      and recent items
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Downloadable charts and an info tab for dataset insights
+                    </li>
+                  </ul>
+                  <div class="project-links">
+                    <button
+                      class="btn-secondary accordion-toggle"
+                      data-target="#ool-accordion"
+                      aria-controls="ool-accordion"
+                    >
+                      <i class="fas fa-chevron-down accordion-icon"></i>
+                      Learn More
+                    </button>
+                    <a
+                      href="https://ool-frontend.vercel.app"
+                      target="_blank"
+                      class="btn-secondary"
+                    >
+                      <i class="fas fa-external-link-alt"></i>
+                      View Live
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Hawaii Open Data Explorer Accordion Row -->
+          <div id="ool-accordion" class="accordion">
+            <div class="accordion-content">
+              <h4>
+                <strong>Note</strong>: This project was a finalist in the 2024
+                Hawaii Annual Code Challenge.
+              </h4>
+              <h3>Overview</h3>
+              <p>
+                The Hawaii Open Data Explorer is a comprehensive tool for
+                exploring datasets provided by various government agencies in
+                Hawaii. The application allows users to search, filter, and
+                visualize data in an intuitive and user-friendly manner.
+              </p>
+              <br />
+              <h3>Concepts Used/Learned</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <h4>Frontend Development</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>React and Next.js</strong>: Utilized for building the
+                  user interface and managing the application state.
+                </li>
+                <li>
+                  <strong>TypeScript</strong>: Ensured type safety and improved
+                  code quality.
+                </li>
+                <li>
+                  <strong>Tailwind CSS</strong>: Applied for styling the
+                  components and creating a responsive design.
+                </li>
+                <li>
+                  <strong>Shadcn/ui</strong>: Used for building responsive and
+                  clean user interfaces
+                </li>
+                <li>
+                  <strong>Axios</strong>: Employed for making HTTP requests to
+                  the backend API.
+                </li>
+              </ul>
+              <br />
+              <h4>Backend Development</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>OpenAI API</strong>: Integrated for generating dataset
+                  suggestions and answering user queries.
+                </li>
+                <li>
+                  <em><strong>Next.js</strong> Environment Variables</em>:
+                  Managed sensitive information using <code>.env</code> files.
+                </li>
+              </ul>
+              <br />
+              <h3>My Role</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <p>
+                As a frontend developer, I was responsible for several key
+                features of the application:
+              </p>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Recent Datasets</strong>: Implemented functionality to
+                  track and display recently accessed datasets.
+                </li>
+                <li>
+                  <strong>Graph Downloading</strong>: Enabled users to download
+                  visualized graphs as images.
+                </li>
+                <li>
+                  <strong>Card Design</strong>: Designed dataset cards to
+                  display essential information such as title, description, and
+                  tags.
+                </li>
+                <li>
+                  <strong>Dataset Bookmarking</strong>: Added bookmarking
+                  feature to datasets using the browser's local storage.
+                </li>
+                <li>
+                  <strong>Sorting and Filtering</strong>: Developed sorting and
+                  filtering mechanisms to help users find relevant datasets.
+                </li>
+                <li>
+                  <strong>Info Tab</strong>: Created an information tab to
+                  provide detailed insights about selected datasets.
+                </li>
+                <li>
+                  <strong>Search for Datasets</strong>: Implemented a search
+                  feature to allow users to find datasets quickly.
+                </li>
+                <li>
+                  <strong>Help & Tips</strong>: Added a help button and several
+                  tooltips to guide users through the application.
+                </li>
+              </ul>
+              <br />
+              <h3>Teamwork and Learning</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <p>
+                This was my first group coding project, and I learned a lot
+                about working in a team. I gained experience in:
+              </p>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Collaboration</strong>: Working closely with team
+                  members to achieve common goals.
+                </li>
+                <li>
+                  <strong>Version Control</strong>: Using GitHub for version
+                  control, including branching, pull requests, and merge
+                  conflicts.
+                </li>
+                <li>
+                  <strong>Code Reviews</strong>: Participating in code reviews
+                  to ensure code quality and consistency.
+                </li>
+                <li>
+                  <strong>Communication</strong>: Effectively communicating with
+                  team members to resolve issues and share progress.
+                </li>
+              </ul>
+              <br />
+              <p>
+                I was initially unfamiliar with some GitHub concepts, but
+                through this project, I became more comfortable with using
+                GitHub for collaboration and version control.
+              </p>
+              <br />
+              <h3>Conclusion</h3>
+              <p>
+                The Hawaii Open Data Explorer project was a valuable learning
+                experience that allowed me to develop my skills in frontend
+                development, teamwork, and using GitHub for version control. I
+                am proud of the features I implemented and the contributions I
+                made to the project.
+              </p>
+            </div>
+          </div>
+
+          <!-- Manoa Menu Project -->
+          <div class="card">
+            <div class="card2">
+              <div class="project-image">
+                <div class="image-carousel">
+                  <img
+                    src="/images/menu-cc-en.png"
+                    alt="Manoa Menu - Campus Center English"
+                    class="carousel-image active"
+                  />
+                  <img
+                    src="/images/menu-cc-jp.png"
+                    alt="Manoa Menu - Campus Center Japanese"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/menu-ha-en.png"
+                    alt="Manoa Menu - Hale Aloha English"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/menu-ha-jp.png"
+                    alt="Manoa Menu - Hale Aloha Japanese"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/map-hours.png"
+                    alt="Manoa Menu - Dining Locations and Hours"
+                    class="carousel-image"
+                  />
+                  <button class="carousel-btn prev">‹</button>
+                  <button class="carousel-btn next">›</button>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>Manoa Menu</h3>
+                <p>
+                  A web application providing menu translations and dining
+                  information for international students at UH Mānoa.
+                </p>
+                <div class="tech-stack">
+                  <span>Next.js</span>
+                  <span>TypeScript</span>
+                  <span>Material UI</span>
+                  <span>OpenAI API</span>
+                  <span>Prisma</span>
+                  <span>Vercel</span>
+                </div>
+                <div class="project-details">
+                  <ul>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Multi-language menu translations with AI-powered
+                      descriptions
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Web scraping for real-time menu data from university
+                      websites
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Interactive dining locations map with hours and directions
+                    </li>
+                  </ul>
+                  <div class="project-links">
+                    <button
+                      class="btn-secondary accordion-toggle"
+                      data-target="#manoamenu-accordion"
+                      aria-controls="manoamenu-accordion"
+                    >
+                      <i class="fas fa-chevron-down accordion-icon"></i>
+                      Learn More
+                    </button>
+                    <a
+                      href="https://manoa-menu-24.vercel.app"
+                      target="_blank"
+                      class="btn-secondary"
+                    >
+                      <i class="fas fa-external-link-alt"></i>
+                      View Live
+                    </a>
+                    <a
+                      href="https://github.com/manoa-menu/manoa-menu"
+                      target="_blank"
+                      class="btn-secondary"
+                    >
+                      <i class="fab fa-github"></i>
+                      Repo
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Manoa Menu Accordion Row -->
+          <div id="manoamenu-accordion" class="accordion">
+            <div class="accordion-content">
+              <h4>
+                <strong>Note</strong>: Does not currently work during summer
+                sessions.
+              </h4>
+              <h3>Overview</h3>
+              <p>
+                The Manoa Menu project is a web application designed to provide
+                menu translations and item descriptions for international
+                students at the University of Hawaiʻi at Mānoa. The application
+                also allows users to view dining menus, find dining locations &
+                hours, manage their favorite items, and get recommendations
+                based on their preferences.
+              </p>
+              <br />
+              <h3>Concepts Used/Learned</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <h4>Frontend Development</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>React and Next.js</strong>: Utilized for building the
+                  user interface and managing the application state.
+                </li>
+                <li>
+                  <strong>React Bootstrap</strong>: Used for styling and
+                  responsive design.
+                </li>
+                <li>
+                  <strong>TypeScript</strong>: Ensured type safety and improved
+                  code quality.
+                </li>
+                <li>
+                  <strong>Material UI</strong>: Used for some pages for
+                  additional UI Components
+                </li>
+                <li>
+                  <strong>Webscraping</strong>: Essential for scraping menus
+                  that lack an API
+                </li>
+              </ul>
+              <br />
+              <h4>Backend Development</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Next.js API Routes</strong>: Implemented for
+                  server-side logic and data fetching.
+                </li>
+                <li>
+                  <strong>Prisma ORM</strong>: Used for database interactions
+                  with PostgreSQL.
+                </li>
+                <li>
+                  <strong>OpenAI API</strong>: Integrated for generating menu
+                  translations in real time.
+                </li>
+              </ul>
+              <br />
+              <h4>Testing and Quality Assurance</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Playwright</strong>: Employed for end-to-end testing.
+                </li>
+                <li>
+                  <strong>ESLint</strong>: Ensured code quality and consistency.
+                </li>
+              </ul>
+              <br />
+              <h4>Deployment</h4>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong>Vercel</strong>: Learned key concepts about the Vercel
+                  CLI, deployment options, error logs, etc.
+                </li>
+              </ul>
+              <br />
+              <h3>My Role</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <p>
+                As a fullstack developer, I was responsible for several key
+                features of the application:
+              </p>
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  <strong
+                    >Developed the
+                    <a href="https://manoa-menu.vercel.app/menu" target="_blank"
+                      >Menu</a
+                    >
+                    page end-to-end</strong
+                  >:
+                  <ul style="list-style-type: disc; margin-left: 1.5rem">
+                    <li>
+                      Created a responsive and easy-to-read menu interface for
+                      multiple languages
+                    </li>
+                    <li>
+                      Used
+                      <a
+                        href="https://www.npmjs.com/package/jsdom"
+                        target="_blank"
+                        >JS-DOM</a
+                      >
+                      to parse the University's website for current accurate
+                      menu data (Campus Center)
+                    </li>
+                    <li>
+                      Used
+                      <a
+                        href="https://www.npmjs.com/package/pdf-parse"
+                        target="_blank"
+                        >PDF-Parse</a
+                      >
+                      to extract menu data from the University's online weekly
+                      PDF
+                    </li>
+                    <li>
+                      Constructed API menu routes to get and check for newer
+                      menu versions
+                    </li>
+                    <li>
+                      Engineered AI prompts for menu translations and
+                      descriptions, fetched with the
+                      <a
+                        href="https://platform.openai.com/docs/overview"
+                        target="_blank"
+                        >OpenAI API</a
+                      >
+                      for customizable JSON-structured data returns.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <strong
+                    >Developed the
+                    <a href="https://manoa-menu.vercel.app/maps" target="_blank"
+                      >Dining Locations and Hours</a
+                    >
+                    page</strong
+                  >:
+                  <ul style="list-style-type: disc; margin-left: 1.5rem">
+                    <li>
+                      Implemented a convenient and responsive page to view
+                      dining locations and their hours
+                    </li>
+                    <li>Used the Google Maps API for map embeds</li>
+                    <li>
+                      Added an 'Get Directions' button for each location, which
+                      will directly guide users using their default maps app
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <br />
+              <h3>Teamwork and Leadership</h3>
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid rgba(111, 212, 255, 0.3);
+                  margin: 1rem 0;
+                "
+              />
+              <ul style="list-style-type: disc; margin-left: 1.5rem">
+                <li>
+                  Coordinated and worked with all developers on tasks and
+                  deadlines
+                </li>
+                <li>Reviewed code and gave ideas for improvement</li>
+                <li>
+                  Lead the team's weekly meetings with an overall agenda per
+                  meet
+                </li>
+              </ul>
+              <br />
+              <div style="text-align: center; margin-top: 2rem">
+                <a
+                  href="https://manoa-menu.github.io/"
+                  target="_blank"
+                  class="btn-secondary"
+                  style="
+                    padding: 0.5rem 1rem;
+                    font-size: 0.9rem;
+                    margin: 0 0.5rem;
+                  "
+                >
+                  <i class="fas fa-book"></i>
+                  View Docs
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Maru Tech Project -->
+          <!-- <div class="card">
+            <div class="card2">
+              <div class="project-image">
+                <div class="image-carousel">
+                  <img
+                    src="/images/Maru-Home.png"
+                    alt="Maru Tech - Home Page"
+                    class="carousel-image active"
+                  />
+                  <img
+                    src="/images/Maru-About.png"
+                    alt="Maru Tech - About Page"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/Maru-Products.png"
+                    alt="Maru Tech - Products Page"
+                    class="carousel-image"
+                  />
+                  <button class="carousel-btn prev">‹</button>
+                  <button class="carousel-btn next">›</button>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>Maru Tech</h3>
+                <p>Modern e-commerce platform built with web technologies and AI integration.</p>
+                <div class="tech-stack">
+                  <span>HTML</span>
+                  <span>CSS</span>
+                  <span>JavaScript</span>
+                  <span>Shoelace UI</span>
+                  <span>PHP</span>
+                  <span>MySQL</span>
+                  <span>AI</span>
+                  <span>n8n</span>
+                </div>
+                <div class="project-details">
+                  <ul>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Shoelace UI components for modern, accessible interface design
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      PHP backend processing with MySQL database for product and job management in English and Korean.
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      AI-powered features and n8n automation workflows for job application processing.
+                    </li>
+                  </ul>
+                  <div class="project-links">
+                    <span class="btn-secondary disabled">
+                      <i class="fas fa-lock"></i>
+                      Private Class Resource
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
+
+          <!-- KLFC Decision Letter Generator -->
+          <!-- <div class="card">
+            <div class="card2">
+              <div class="project-image">
+                <div class="image-carousel">
+                  <img
+                    src="/images/klfc-form.png"
+                    alt="KLFC Form"
+                    class="carousel-image active"
+                  />
+                  <img
+                    src="/images/klfc-generate.png"
+                    alt="KLFC Generate"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/fpdfcode1.png"
+                    alt="FPDF Code 1"
+                    class="carousel-image"
+                  />
+                  <button class="carousel-btn prev">‹</button>
+                  <button class="carousel-btn next">›</button>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>KLFC Decision Letter Generator</h3>
+                <p>Automated PDF letter generator for student applications.</p>
+                <div class="tech-stack">
+                  <span>PHP</span>
+                  <span>FPDF</span>
+                  <span>Bootstrap 5</span>
+                </div>
+                <div class="project-details">
+                  <ul>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      HTML form sends name, date, and acceptance status
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Generates PDF documents with proper letterhead and
+                      signature
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Uses FPDF PHP library for customizable PDF generation
+                    </li>
+                  </ul>
+                  <div class="project-links">
+                    <span class="btn-secondary disabled">
+                      <i class="fas fa-lock"></i>
+                      Internal Tool
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- Word Dough Project -->
+          <!--
+          <div class="card">
+            <div class="card2">
+              <div class="project-image">
+                <div class="image-carousel">
+                  <img
+                    src="/images/Word-Dough.png"
+                    alt="Word Dough"
+                    class="carousel-image active"
+                  />
+                  <img
+                    src="/images/Login.png"
+                    alt="Word Dough Login"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/Register.png"
+                    alt="Word Dough Register"
+                    class="carousel-image"
+                  />
+                  <img
+                    src="/images/Leaderboard.png"
+                    alt="Word Dough Leaderboard"
+                    class="carousel-image"
+                  />
+                  <button class="carousel-btn prev">‹</button>
+                  <button class="carousel-btn next">›</button>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>Word Dough</h3>
+                <p>
+                  A competitive version of Wordle with login, registration, and
+                  leaderboard system.
+                </p>
+                <div class="tech-stack">
+                  <span>HTML</span>
+                  <span>CSS</span>
+                  <span>JavaScript</span>
+                  <span>PHP</span>
+                  <span>MySQL</span>
+                </div>
+                <div class="project-details">
+                  <ul>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Uses Merriam-Webster Dictionary API to verify word
+                      validity
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Integrates OpenAI's Moderation API for username filtering
+                    </li>
+                    <li>
+                      <i class="fas fa-angles-right"></i>
+                      Implements client-side cookies for account authorization
+                    </li>
+                  </ul>
+                  <div class="project-links">
+                    <a
+                      href="https://practicalsoftware.com/worddough/index.html"
+                      target="_blank"
+                      class="btn-secondary"
+                    >
+                      <i class="fas fa-external-link-alt"></i>
+                      View Live
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p>&copy; 2025 Justin Sumiye</p>
+          <div class="footer-links">
+            <a href="mailto:portfolio@practicalsoftware.com">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="scripts.js"></script>
+  </body>
+</html>
