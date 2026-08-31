@@ -1,0 +1,16 @@
+# Upload this file to your OLD host as: public_html/.htaccess
+# (portfolio.practicalsoftware.com per your FTP config)
+#
+# Rename to exactly: .htaccess  (leading dot, no extension)
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Redirect entire old portfolio to the new site
+  RewriteRule ^(.*)$ https://jsumiye.github.io/ [R=301,L]
+</IfModule>
+
+# Fallback if mod_rewrite is disabled
+<IfModule !mod_rewrite.c>
+  Redirect 301 / https://jsumiye.github.io/
+</IfModule>

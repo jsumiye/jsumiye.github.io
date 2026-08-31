@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Making Hawaii open data feel searchable · Justin Sumiye</title>
+    <meta
+      name="description"
+      content="Notes from the Hawaii Open Data Explorer, a 2024 HACC finalist. Search, charts, bookmarks, and a first real GitHub team."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" href="/images/portfoliofavicon.png" />
+    <meta name="theme-color" content="#faf8f4" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="logo" href="/" aria-label="Home">
+          <svg viewBox="0 0 24 32" aria-hidden="true">
+            <path
+              d="M12 2c-2.3 0-4.1 1.8-4.1 4.2 0 1.5.5 2.8 1.1 4.2.4.9.7 1.8.7 2.9 0 1.1-.7 2.2-1.5 3.9-.8 1.7-1.3 3.6-1.1 5.2.2 1.9 1.8 3.2 4.9 3.2s4.7-1.3 4.9-3.2c.2-1.6-.3-3.5-1.1-5.2-.8-1.7-1.5-2.8-1.5-3.9 0-1.1.3-2 .7-2.9.6-1.4 1.1-2.7 1.1-4.2C16.1 3.8 14.3 2 12 2z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect x="7.4" y="9.2" width="9.2" height="2.1" rx="0.35" fill="currentColor" />
+          </svg>
+        </a>
+        <a href="/">home</a>
+        <a href="/projects/">projects</a>
+        <a href="/notes/" aria-current="page">notes</a>
+        <a href="/resume/">resume</a>
+        <div class="nav-social">
+          <a href="https://www.linkedin.com/in/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect width="4" height="12" x="2" y="9" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <a href="https://github.com/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="content" class="wrap">
+      <article class="prose">
+        <h1>Making Hawaii open data feel searchable</h1>
+        <p class="note-meta">2024 · HACC finalist</p>
+
+        <p>
+          Hawaii publishes a lot of datasets. Finding a useful one still felt
+          like wandering a filing cabinet. For the 2024 Hawaii Annual Code
+          Challenge we built a frontend that can search, filter, bookmark, and chart
+          those catalogs. We were finalists. This was also the first time I
+          shipped software with a team on GitHub instead of with myself.
+        </p>
+        <p>
+          Live site:
+          <a href="https://ool-frontend.vercel.app" target="_blank" rel="noopener noreferrer">ool-frontend.vercel.app</a>.
+        </p>
+
+        <figure>
+          <img
+            src="/images/OOL-Main.png"
+            alt="Hawaii Open Data Explorer catalog with search, filters, and dataset cards."
+          />
+          <figcaption>
+            The catalog. My work sat in the cards, the search, the recent list,
+            and the bookmark in the corner of each dataset.
+          </figcaption>
+        </figure>
+
+        <h2>What I actually owned</h2>
+        <p>
+          I was a frontend developer on the team. The list is specific because
+          group projects love to turn into "we all did everything."
+        </p>
+        <ul>
+          <li>Search across datasets</li>
+          <li>Sort and filter</li>
+          <li>Dataset cards. Title, description, tags</li>
+          <li>Bookmarks in <code>localStorage</code></li>
+          <li>Recently opened datasets</li>
+          <li>An info tab for the dataset you have open</li>
+          <li>Downloading a chart as an image</li>
+          <li>Help copy and tooltips</li>
+        </ul>
+        <p>
+          Bookmarks in localStorage is not glamorous. It is the difference
+          between "I will remember this CSV" and actually finding it again on
+          a library computer that will forget you at 5 p.m.
+        </p>
+        <pre><code>function toggleBookmark(id) {
+  const key = "ood.bookmarks";
+  const current = JSON.parse(localStorage.getItem(key) || "[]");
+  const next = current.includes(id)
+    ? current.filter((item) => item !== id)
+    : [...current, id];
+  localStorage.setItem(key, JSON.stringify(next));
+  return next;
+}</code></pre>
+
+        <h2>A table is a start. A graph is why you stayed</h2>
+        <p>
+          Once you pick a dataset, you need to see it. The table is the honest
+          view. The graph is the one you download for a slide. I wired the
+          download so a chart left the browser as an image instead of a
+          screenshot with the browser chrome still on it.
+        </p>
+        <figure>
+          <img
+            src="/images/OOL-Table.png"
+            alt="Tabular view of a Hawaii open dataset."
+          />
+          <figcaption>Table view. Rows, not a vibe.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/images/OOL-Graph.png"
+            alt="Chart view of a Hawaii open dataset."
+          />
+          <figcaption>Graph view. This is the file you actually email.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/images/OOL-Info.png"
+            alt="Info tab with dataset metadata."
+          />
+          <figcaption>
+            Info tab. Source, organization, the metadata people skip until they
+            need it.
+          </figcaption>
+        </figure>
+
+        <h2>A chat box on government CSVs</h2>
+        <p>
+          We pointed OpenAI at dataset suggestions and user questions. It is
+          useful when it names a dataset you would not have queried. It is
+          wrong when it sounds sure. I still want the catalog, the filters, and
+          the table to work if the model is having a day.
+        </p>
+        <figure>
+          <img
+            src="/images/OOL-Chat.png"
+            alt="Chat interface for asking questions about Hawaii datasets."
+          />
+          <figcaption>
+            Chat. A suggestion engine on top of a search engine, not a
+            replacement for one.
+          </figcaption>
+        </figure>
+
+        <pre class="diagram" aria-label="Explorer architecture">
+  CKAN-style catalog
+          |
+          v
+  Next.js + TypeScript
+    search, cards, filters
+    localStorage bookmarks
+          |
+          +--> table
+          +--> chart  -->  PNG download
+          +--> info tab
+          +--> OpenAI suggestions
+        </pre>
+
+        <h2>GitHub, finally</h2>
+        <p>
+          I knew commits. I did not know a pull request that someone else would
+          reject. Branch names, merge conflicts, a review that says the card
+          padding is wrong. That was the other half of HACC for me. Tailwind
+          and shadcn/ui made the UI hold together. Axios talked to the API.
+          Environment variables kept keys out of the repo, which is the kind of
+          sentence you only write after you almost committed one.
+        </p>
+        <p>
+          If I opened the repo tomorrow I would still look at search first.
+          A data explorer that cannot find "Maui" is just a pretty empty state.
+        </p>
+      </article>
+      <p class="note-nav"><a href="/notes/">All notes</a></p>
+    </main>
+  </body>
+</html>

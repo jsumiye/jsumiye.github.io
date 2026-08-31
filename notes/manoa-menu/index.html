@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Center's menu, scraped and translated · Justin Sumiye</title>
+    <meta
+      name="description"
+      content="Manoa Menu scrapes UH Manoa dining pages and PDFs, then translates them for international students."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" href="/images/portfoliofavicon.png" />
+    <meta name="theme-color" content="#faf8f4" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="logo" href="/" aria-label="Home">
+          <svg viewBox="0 0 24 32" aria-hidden="true">
+            <path
+              d="M12 2c-2.3 0-4.1 1.8-4.1 4.2 0 1.5.5 2.8 1.1 4.2.4.9.7 1.8.7 2.9 0 1.1-.7 2.2-1.5 3.9-.8 1.7-1.3 3.6-1.1 5.2.2 1.9 1.8 3.2 4.9 3.2s4.7-1.3 4.9-3.2c.2-1.6-.3-3.5-1.1-5.2-.8-1.7-1.5-2.8-1.5-3.9 0-1.1.3-2 .7-2.9.6-1.4 1.1-2.7 1.1-4.2C16.1 3.8 14.3 2 12 2z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect x="7.4" y="9.2" width="9.2" height="2.1" rx="0.35" fill="currentColor" />
+          </svg>
+        </a>
+        <a href="/">home</a>
+        <a href="/projects/">projects</a>
+        <a href="/notes/" aria-current="page">notes</a>
+        <a href="/resume/">resume</a>
+        <div class="nav-social">
+          <a href="https://www.linkedin.com/in/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect width="4" height="12" x="2" y="9" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <a href="https://github.com/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="content" class="wrap">
+      <article class="prose">
+        <h1>Campus Center's menu, scraped and translated</h1>
+        <p class="note-meta">2024</p>
+
+        <p>
+          International students at UH Mānoa should not have to guess what
+          "plate lunch" means from a PDF. Manoa Menu pulls dining hall menus,
+          translates them, and puts locations on a map. I built the menu page
+          end to end and the dining locations page. I also ran the weekly
+          meeting, which is a different kind of parsing.
+        </p>
+        <p>
+          <a href="https://manoa-menu-24.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
+          ·
+          <a href="https://github.com/manoa-menu/manoa-menu" target="_blank" rel="noopener noreferrer">Repo</a>
+          ·
+          <a href="https://manoa-menu.github.io/" target="_blank" rel="noopener noreferrer">Docs</a>
+        </p>
+        <p>
+          It does not work during summer sessions. The source pages go quiet,
+          and a scraper cannot invent a kitchen.
+        </p>
+
+        <pre class="diagram" aria-label="Manoa Menu data flow">
+  Campus Center HTML  -- jsdom ------+
+                                     |
+  Hale Aloha weekly PDF -- pdf-parse +--> API routes --> Postgres (Prisma)
+                                     |
+                                     +--> OpenAI  -->  ja / descriptions
+                                              |
+                                              v
+                                      Next.js menu UI
+                                      Google Maps hours
+        </pre>
+
+        <h2>There is no menu API</h2>
+        <p>
+          Campus Center publishes HTML. Hale Aloha publishes a weekly PDF. I
+          used jsdom on the first and pdf-parse on the second, then stored a
+          versioned snapshot so the UI is not scraping on every page load.
+        </p>
+        <pre><code>export async function getCampusCenterMenu() {
+  const html = await fetch(CAMPUS_CENTER_URL).then((r) => r.text());
+  const dom = new JSDOM(html);
+  const days = [...dom.window.document.querySelectorAll(".menu-day")];
+
+  return days.map((day) => ({
+    label: day.querySelector("h2")?.textContent?.trim(),
+    plate: textList(day, ".plate-lunch li"),
+    grab: textList(day, ".grab-and-go li"),
+  }));
+}</code></pre>
+        <p>
+          The selectors in that snippet are the idea, not a contract with the
+          university's CMS. The CMS will move a class name. The job is to notice
+          before Monday lunch.
+        </p>
+        <p>
+          API routes compare the newly fetched menu to the stored one. If
+          nothing changed, we keep the last translation. OpenAI is billed per
+          token. Re-translating "Chicken Katsu" every ten minutes is a hobby
+          I declined.
+        </p>
+
+        <h2>English first, then Japanese</h2>
+        <p>
+          The menu UI is a week of plate lunch and grab-and-go. Language is a
+          control, not a separate site. I wrote prompts that asked for
+          JSON, because a paragraph of Japanese with no structure is how you
+          ship "Monday" under Friday.
+        </p>
+        <figure>
+          <img
+            src="/images/menu-cc-en.png"
+            alt="Campus Center food court menu in English, Monday through Friday."
+          />
+          <figcaption>Campus Center, English. The layout has to survive a long entree name.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/images/menu-cc-jp.png"
+            alt="Campus Center food court menu in Japanese."
+          />
+          <figcaption>Campus Center, Japanese. Same week, second language.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/images/menu-ha-en.png"
+            alt="Hale Aloha dining menu in English."
+          />
+          <figcaption>Hale Aloha, English. This one started as a PDF.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/images/menu-ha-jp.png"
+            alt="Hale Aloha dining menu in Japanese."
+          />
+          <figcaption>Hale Aloha, Japanese.</figcaption>
+        </figure>
+
+        <h2>Hours are a map problem</h2>
+        <p>
+          The locations page embeds Google Maps and a directions button that
+          opens the phone's own maps app. Students already have a maps app.
+          I do not need to invent a worse one.
+        </p>
+        <figure>
+          <img
+            src="/images/map-hours.png"
+            alt="Dining locations and hours with map embeds."
+          />
+          <figcaption>
+            Locations and hours. The useful click is Get Directions.
+          </figcaption>
+        </figure>
+
+        <h2>The rest of the stack, and the meetings</h2>
+        <p>
+          Next.js API routes, Prisma against Postgres, Playwright for end-to-end
+          tests, ESLint, Vercel. I learned the Vercel CLI by reading error logs
+          at hours I will not defend. Material UI showed up on some pages.
+          Bootstrap on others. A semester project is allowed to be a little
+          inconsistent if the menu is right.
+        </p>
+        <p>
+          I coordinated tasks, reviewed code, and kept a weekly agenda. The
+          technical lesson is scraping. The other lesson is that a menu app
+          dies if nobody notices the PDF layout changed on Sunday night.
+        </p>
+      </article>
+      <p class="note-nav"><a href="/notes/">All notes</a></p>
+    </main>
+  </body>
+</html>

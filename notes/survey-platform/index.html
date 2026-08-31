@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A survey stack for K-12, from builder to PDF · Justin Sumiye</title>
+    <meta
+      name="description"
+      content="How a K-12 survey platform moved from legacy QST files to a builder, a database, and letter-size PDF reports."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" href="/images/portfoliofavicon.png" />
+    <meta name="theme-color" content="#faf8f4" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="logo" href="/" aria-label="Home">
+          <svg viewBox="0 0 24 32" aria-hidden="true">
+            <path
+              d="M12 2c-2.3 0-4.1 1.8-4.1 4.2 0 1.5.5 2.8 1.1 4.2.4.9.7 1.8.7 2.9 0 1.1-.7 2.2-1.5 3.9-.8 1.7-1.3 3.6-1.1 5.2.2 1.9 1.8 3.2 4.9 3.2s4.7-1.3 4.9-3.2c.2-1.6-.3-3.5-1.1-5.2-.8-1.7-1.5-2.8-1.5-3.9 0-1.1.3-2 .7-2.9.6-1.4 1.1-2.7 1.1-4.2C16.1 3.8 14.3 2 12 2z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect x="7.4" y="9.2" width="9.2" height="2.1" rx="0.35" fill="currentColor" />
+          </svg>
+        </a>
+        <a href="/">home</a>
+        <a href="/projects/">projects</a>
+        <a href="/notes/" aria-current="page">notes</a>
+        <a href="/resume/">resume</a>
+        <div class="nav-social">
+          <a href="https://www.linkedin.com/in/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect width="4" height="12" x="2" y="9" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <a href="https://github.com/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="content" class="wrap">
+      <article class="prose">
+        <h1>A survey stack for K-12, from builder to PDF</h1>
+        <p class="note-meta">May 2025</p>
+
+        <p>
+          A client sent a folder of <code>.qst</code> files and asked if the new
+          site could read them. I had not heard of the format. The files held
+          years of questions, school names, and response data from a system that
+          was not coming with us. The job was to keep that history and give
+          staff a builder that did not feel like 2009.
+        </p>
+        <p>
+          This is private work for K-12 survey operations. I cannot link a demo.
+          I can walk through how a survey moves through the system, because that
+          is the part I still think about.
+        </p>
+
+        <pre class="diagram" aria-label="Survey system flow">
+  SurveyJS builder          public taker
+          \                    /
+           \                  /
+            +-->  MySQL  <---+
+                     |
+                     v
+              html2canvas
+                 jsPDF
+              letter-size
+                report
+        </pre>
+        <p>
+          Three surfaces share one database. The builder writes a survey. The
+          taker writes responses. Reporting reads both and draws charts that
+          have to line up across years.
+        </p>
+
+        <h2>The table that runs the week</h2>
+        <p>
+          Most of the operational work happens on one screen. Category, author,
+          status. School, season, year. A count of responses. Opens-at and
+          expires-at, which sound like timestamps until a teacher needs a survey
+          to go live at midnight in a state you do not live in.
+        </p>
+        <figure>
+          <img
+            src="/images/Survey-Manage.png"
+            alt="Manage Surveys table with school names, response counts, visibility badges, and schedule pills."
+          />
+          <figcaption>
+            Manage Surveys. Import sits next to create, because a lot of the
+            catalog did not start in this app.
+          </figcaption>
+        </figure>
+        <p>
+          Visibility is private, unlisted, or public, shown as a small badge
+          rather than a settings maze. Sharing is a slug. Copy the link, or the
+          UI falls back if the clipboard call fails, because school machines are
+          not always in the mood.
+        </p>
+        <p>
+          DataTables handles sort, page, and a few custom filters. I care less
+          about the library than about the fact that a person can find last
+          fall's postgrad survey for a Texas high school without asking me.
+        </p>
+
+        <h2>Reading a format that wanted to stay</h2>
+        <p>
+          The QST importer is the unglamorous center of the project. A file
+          comes in, sometimes with a CSV or DAT sibling. Metadata fields turn on
+          as the parser learns what it has. Get the school name wrong and you
+          have invented a campus. Get the question order wrong and a five-year
+          comparison chart lies.
+        </p>
+        <p>
+          I treat the parser as a pipeline with boring checkpoints, not a clever
+          one-liner.
+        </p>
+        <pre><code>function ingestLegacySurvey(file, extras = {}) {
+  const qst = parseQst(file);
+  const rows = extras.csv ? parseCsv(extras.csv) : [];
+
+  assertQuestions(qst.questions);
+  if (rows.length) assertSchema(qst, rows);
+
+  return {
+    title: qst.title,
+    questions: qst.questions,
+    choices: qst.choices,
+    responses: rows,
+  };
+}</code></pre>
+        <p>
+          That is the shape, not a dump of the production file. The real parser
+          is pickier. Matrix questions flatten into rows. Choice ids have to
+          survive a round trip into SurveyJS so a teacher can edit an imported
+          survey without the toolbox offering a hundred question types they were
+          never supposed to see. The palette is curated on purpose.
+        </p>
+
+        <h2>The database has to survive a school year</h2>
+        <p>
+          Features arrived after the first schema. I write migrations that keep
+          old rows valid. A new <code>opens_at</code> column cannot blank out
+          surveys that were already in the wild. Student-adjacent data means
+          I do not concatenate SQL, even when the table UI makes it tempting.
+        </p>
+        <pre><code>$stmt = $pdo->prepare(
+  'SELECT id, school_name, response_count
+     FROM surveys
+    WHERE author_id = :author
+      AND status = :status
+    ORDER BY updated_at DESC'
+);
+$stmt->execute([
+  ':author' => $authorId,
+  ':status' => $status,
+]);</code></pre>
+        <p>
+          State-changing posts check a CSRF token in a cookie and in the form.
+          Roles decide who sees another school's reports. Input is validated
+          before it hits the CSV replace path, because bulk upload is where
+          people paste the wrong year.
+        </p>
+        <figure>
+          <img
+            src="/images/Survey-Data.png"
+            alt="Survey data management screen."
+          />
+          <figcaption>
+            Response data. Replace means replace. A partial paste should fail
+            loudly, not silently rewrite three columns.
+          </figcaption>
+        </figure>
+
+        <h2>Reports are the product</h2>
+        <p>
+          Staff do not brag about a builder. They email a PDF. The report
+          pipeline detects questions that line up across surveys, flattens
+          matrix rows, and feeds html2canvas into jsPDF so the output is a
+          letter-size document with a header and footer that stay put when the
+          chart count gets rude.
+        </p>
+        <pre class="diagram" aria-label="PDF report pipeline">
+  aligned questions
+          |
+          v
+  chart + table HTML  -->  html2canvas  -->  jsPDF pages
+                                              header
+                                              footer
+                                              letter, 8.5 x 11
+        </pre>
+        <p>
+          Templates split into page templates and a more advanced set. Duplicate
+          and rename exist because nobody wants to rebuild last year's layout
+          from a blank page. Comparison charts are the feature I would keep if
+          I could keep only one. A single-year bar is a slide. A three-year
+          overlay is an argument.
+        </p>
+        <figure>
+          <img
+            src="/images/Survey-Report.png"
+            alt="Generated survey report with charts and templated layout."
+          />
+          <figcaption>
+            A generated report. The interesting work is whether this year's
+            question is actually the same question as 2023.
+          </figcaption>
+        </figure>
+
+        <h2>What I would still change</h2>
+        <p>
+          Scheduling across time zones is more interesting than it looks, and
+          I am not done being suspicious of it. The importer could explain
+          itself better when a QST file is almost valid. The rest of the stack
+          is the kind of PHP, MySQL, and JavaScript that has to be boring on
+          purpose. Schools will still be opening these surveys next fall.
+        </p>
+      </article>
+      <p class="note-nav"><a href="/notes/">All notes</a></p>
+    </main>
+  </body>
+</html>
