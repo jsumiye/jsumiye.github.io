@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="/styles.css" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" href="/images/portfoliofavicon.png" />
+    <link rel="prefetch" href="/projects/" />
+    <link rel="prefetch" href="/notes/" />
+    <link rel="prefetch" href="/resume/" />
     <meta name="theme-color" content="#faf8f4" />
   </head>
   <body>
@@ -67,19 +70,33 @@
     </header>
 
     <main id="content" class="wrap">
-      <h1>...who's Justin Sumiye?</h1>
-      <p class="lede">
-        I build web applications in Honolulu. Most of the work is full stack.
-        Survey software for schools, tools for a university language program,
-        and the occasional side project that starts as a question.
-      </p>
-      <p class="lede lede-last">
-        I wrote my first programs at eight, in Scratch and LEGO robots. Now I
-        study computer science at UH Mānoa, with a cybersecurity concentration,
-        and I work as a full stack engineer at Practical Software. When I am
-        away from a keyboard I am usually bowling or putting a record on. Both
-        reward paying attention.
-      </p>
+      <div class="bio">
+        <div class="bio-text">
+          <h1>...who's Justin Sumiye?</h1>
+          <p class="lede">
+            I build web applications in Honolulu. Most of the work is full stack.
+            Survey software for schools, tools for a university language program,
+            and the occasional side project that starts as a question.
+          </p>
+          <p class="lede lede-last">
+            I wrote my first programs at eight, in Scratch and LEGO robots. Now I
+            study computer science at UH Mānoa, with a cybersecurity concentration,
+            and I work as a full stack engineer at Practical Software. When I am
+            away from a keyboard I am usually bowling or putting a record on. Both
+            reward paying attention.
+          </p>
+          <p class="stack">
+            JavaScript · TypeScript · React · Next.js · PHP · MySQL · Python
+          </p>
+        </div>
+        <img
+          class="portrait"
+          src="/images/justin-klfc-c.jpg"
+          alt="Justin Sumiye"
+          width="120"
+          height="120"
+        />
+      </div>
 
       <h2>Things I've done</h2>
       <div class="entry">
@@ -112,36 +129,6 @@
         >
         <span class="entry-meta">2023</span>
       </div>
-
-      <h2>Things I've built</h2>
-      <div class="entry">
-        <a href="/notes/survey-platform/">Survey platform</a>
-        <span class="entry-meta"
-          >Builder, data, and letter-size reports for K-12 schools</span
-        >
-      </div>
-      <div class="entry">
-        <a href="/notes/tubereader/">TubeReader</a>
-        <span class="entry-meta"
-          >YouTube videos turned into formatted articles</span
-        >
-      </div>
-      <div class="entry">
-        <a href="/notes/hawaii-open-data/">Hawaii Open Data Explorer</a>
-        <span class="entry-meta"
-          >Search and charts for Hawaii government datasets</span
-        >
-      </div>
-      <div class="entry">
-        <a href="/notes/manoa-menu/">Manoa Menu</a>
-        <span class="entry-meta"
-          >Translated dining hall menus for UH Mānoa</span
-        >
-      </div>
-      <div class="entry">
-        <a href="/notes/decision-letters/">KLFC letters</a>
-        <span class="entry-meta">PDF decision letters with real letterhead</span>
-      </div>
       <p class="more">
         <a href="/projects/"
           >View all projects
@@ -150,37 +137,14 @@
             <path d="M7 17 17 7" />
           </svg>
         </a>
+        <a href="/notes/"
+          >Read the notes
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
+          </svg>
+        </a>
       </p>
-
-      <h2>Words I've written</h2>
-      <div class="entry">
-        <a href="/notes/survey-platform/"
-          >A survey stack for K-12, from builder to PDF</a
-        >
-        <span class="entry-meta">2025</span>
-      </div>
-      <div class="entry">
-        <a href="/notes/tubereader/">YouTube in, article out</a>
-        <span class="entry-meta">2025</span>
-      </div>
-      <div class="entry">
-        <a href="/notes/hawaii-open-data/"
-          >Making Hawaii open data feel searchable</a
-        >
-        <span class="entry-meta">2024</span>
-      </div>
-      <div class="entry">
-        <a href="/notes/manoa-menu/"
-          >Campus Center's menu, scraped and translated</a>
-        >
-        <span class="entry-meta">2024</span>
-      </div>
-      <div class="entry section-end">
-        <a href="/notes/decision-letters/"
-          >Decision letters, generated</a
-        >
-        <span class="entry-meta">2023</span>
-      </div>
 
       <p class="colophon">
         Honolulu
