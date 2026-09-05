@@ -18,7 +18,6 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" href="/images/portfoliofavicon.png" />
     <link rel="prefetch" href="/" />
-    <link rel="prefetch" href="/notes/" />
     <link rel="prefetch" href="/resume/" />
     <meta name="theme-color" content="#faf8f4" />
   </head>
@@ -39,7 +38,6 @@
         </a>
         <a href="/">home</a>
         <a href="/projects/" aria-current="page">projects</a>
-        <a href="/notes/">notes</a>
         <a href="/resume/">resume</a>
         <div class="nav-social">
           <a
@@ -74,9 +72,18 @@
 
       <article class="project-block">
         <h2><a href="/notes/survey-platform/">Survey platform</a></h2>
+        <ul class="stack" aria-label="Tech stack">
+          <li>PHP</li>
+          <li>MySQL</li>
+          <li>SurveyJS</li>
+        </ul>
         <p>
           Builder, response data, and letter-size PDF reports for K-12 schools.
           Reads old QST files so years of surveys do not have to be retyped.
+        </p>
+        <p class="links">
+          <a class="writeup" href="/notes/survey-platform/">Writeup</a>
+          <span>Private company project</span>
         </p>
         <a class="still" href="/notes/survey-platform/" tabindex="-1">
           <img
@@ -85,17 +92,22 @@
             loading="lazy"
           />
         </a>
-        <p class="links">
-          <a href="/notes/survey-platform/">Writeup</a>
-          <span>Private company project</span>
-        </p>
       </article>
 
       <article class="project-block">
         <h2><a href="/notes/hawaii-open-data/">Hawaii Open Data Explorer</a></h2>
+        <ul class="stack" aria-label="Tech stack">
+          <li>Next.js</li>
+          <li>TypeScript</li>
+          <li>Express</li>
+        </ul>
         <p>
           Search, filter, and chart Hawaii government datasets. Finalist in the
           2024 Hawaii Annual Code Challenge.
+        </p>
+        <p class="links">
+          <a class="writeup" href="/notes/hawaii-open-data/">Writeup</a>
+          <a href="https://ool-frontend.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
         </p>
         <a class="still" href="/notes/hawaii-open-data/" tabindex="-1">
           <img
@@ -104,17 +116,24 @@
             loading="lazy"
           />
         </a>
-        <p class="links">
-          <a href="/notes/hawaii-open-data/">Writeup</a>
-          <a href="https://ool-frontend.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
-        </p>
       </article>
 
       <article class="project-block">
         <h2><a href="/notes/manoa-menu/">Manoa Menu</a></h2>
+        <ul class="stack" aria-label="Tech stack">
+          <li>Next.js</li>
+          <li>TypeScript</li>
+          <li>Postgres</li>
+        </ul>
         <p>
-          Dining hall menus for UH Mānoa, translated and described for
-          international students. Scraped because the campus sites have no API.
+          Weekly menus for three UH Mānoa dining locations, in English,
+          Japanese, Korean, and Chinese. Started as a class team project. I
+          simplified it and keep it running.
+        </p>
+        <p class="links">
+          <a class="writeup" href="/notes/manoa-menu/">Writeup</a>
+          <a href="https://manoa-menu.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
+          <a href="https://github.com/manoa-menu/manoa-menu" target="_blank" rel="noopener noreferrer">Repo</a>
         </p>
         <a class="still" href="/notes/manoa-menu/" tabindex="-1">
           <img
@@ -123,18 +142,22 @@
             loading="lazy"
           />
         </a>
-        <p class="links">
-          <a href="/notes/manoa-menu/">Writeup</a>
-          <a href="https://manoa-menu-24.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
-          <a href="https://github.com/manoa-menu/manoa-menu" target="_blank" rel="noopener noreferrer">Repo</a>
-        </p>
       </article>
 
       <article class="project-block">
         <h2><a href="/notes/tubereader/">TubeReader</a></h2>
+        <ul class="stack" aria-label="Tech stack">
+          <li>PHP</li>
+          <li>React</li>
+          <li>MySQL</li>
+        </ul>
         <p>
           Turns a YouTube URL into a formatted article with tone, theme, and
           visibility controls.
+        </p>
+        <p class="links">
+          <a class="writeup" href="/notes/tubereader/">Writeup</a>
+          <a href="https://tubereader.practicalsoftware.com" target="_blank" rel="noopener noreferrer">Limited demo</a>
         </p>
         <a class="still" href="/notes/tubereader/" tabindex="-1">
           <img
@@ -143,18 +166,30 @@
             loading="lazy"
           />
         </a>
-        <p class="links">
-          <a href="/notes/tubereader/">Writeup</a>
-          <a href="https://tubereader.practicalsoftware.com" target="_blank" rel="noopener noreferrer">Limited demo</a>
-        </p>
       </article>
 
       <article class="project-block">
-        <h2>Korean culture trivia</h2>
+        <h2><a href="/notes/korean-trivia/">Korean culture trivia</a></h2>
+        <ul class="stack" aria-label="Tech stack">
+          <li>React</li>
+          <li>Vite</li>
+          <li>Material UI</li>
+        </ul>
         <p>
-          A Vite and React trivia game for the Korean Flagship Center. Past 150
-          plays. Built for students, not for a product page.
+          Trivia for the Korean Flagship Center's Culture Day. Hosted on the
+          program site. Past 150 plays.
         </p>
+        <p class="links">
+          <a class="writeup" href="/notes/korean-trivia/">Writeup</a>
+          <a href="https://koreanflagship.manoa.hawaii.edu/trivia/" target="_blank" rel="noopener noreferrer">Live</a>
+        </p>
+        <a class="still" href="/notes/korean-trivia/" tabindex="-1">
+          <img
+            src="/images/Trivia-Question.png"
+            alt="Culture trivia prompt with four color-coded answer rows."
+            loading="lazy"
+          />
+        </a>
       </article>
 
       <article class="project-block">

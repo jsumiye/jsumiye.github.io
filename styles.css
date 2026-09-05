@@ -397,15 +397,56 @@ h3 {
   margin-bottom: 0.4rem;
 }
 
+.project-block .stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0 0 0.45rem;
+  padding: 0;
+}
+
+.project-block .stack li {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.14rem 0.42rem;
+}
+
 .project-block .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.15rem 1rem;
+  align-items: center;
+  gap: 0.45rem 0.9rem;
+  margin: 0.55rem 0 0.15rem;
   font-size: 0.95rem;
 }
 
 .project-block .links span {
   color: var(--muted);
+}
+
+.project-block .writeup {
+  display: inline-flex;
+  align-items: center;
+  color: var(--bg);
+  background: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.88rem;
+  line-height: 1.2;
+  padding: 0.32rem 0.75rem;
+  border-radius: 4px;
+}
+
+.project-block .writeup:hover {
+  color: var(--bg);
+  background: #7e2f25;
+  text-decoration: none;
 }
 
 .project-block .still {
@@ -547,6 +588,18 @@ a.still:hover {
   overflow-x: auto;
   margin: 1.1rem 0 1.35rem;
   color: var(--text);
+}
+
+.prose .mermaid {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.prose .mermaid svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .prose code {

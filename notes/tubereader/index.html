@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YouTube in, article out · Justin Sumiye</title>
+    <title>Article generation from YouTube · Justin Sumiye</title>
     <meta
       name="description"
-      content="TubeReader turns a YouTube URL into a formatted article. Transcript, model, tone, and visibility."
+      content="How TubeReader turns a YouTube URL into an article, with paid monitors, Stripe credits, and an hourly n8n job."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,7 +26,7 @@
         <a class="logo" href="/" aria-label="Home">
           <svg viewBox="0 0 24 32" aria-hidden="true">
             <path
-              d="M12 2c-2.3 0-4.1 1.8-4.1 4.2 0 1.5.5 2.8 1.1 4.2.4.9.7 1.8.7 2.9 0 1.1-.7 2.2-1.5 3.9-.8 1.7-1.3 3.6-1.1 5.2.2 1.9 1.8 3.2 4.9 3.2s4.7-1.3 4.9-3.2c.2-1.6-.3-3.5-1.1-5.2-.8-1.7-1.5-2.8-1.5-3.9 0-1.1.3-2 .7-2.9.6-1.4 1.1-2.7 1.1-4.2C16.1 3.8 14.3 2 12 2z"
+              d="M12 2c-2.3 0-4.1 1.8-4.1 4.2 0 1.5.5 2.8 1.1 4.2.4.9.7 1.8.7 2.9 0 1.1-.7 2.2-1.5 3.9-.8 1.7-1.3 3.6-1.1 5.2.2 1.9 1.8 3.2 4.9 3.2s4.7-1.3 4.9-3.2c.2-1.6-.3-3.5-1.1-5.2-.8 1.7-1.5-2.8-1.5-3.9 0-1.1.3-2 .7-2.9.6-1.4 1.1-2.7 1.1-4.2C16.1 3.8 14.3 2 12 2z"
               fill="none"
               stroke="currentColor"
               stroke-width="1.5"
@@ -35,8 +35,7 @@
           </svg>
         </a>
         <a href="/">home</a>
-        <a href="/projects/">projects</a>
-        <a href="/notes/" aria-current="page">notes</a>
+        <a href="/projects/" aria-current="page">projects</a>
         <a href="/resume/">resume</a>
         <div class="nav-social">
           <a href="https://www.linkedin.com/in/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -58,44 +57,36 @@
 
     <main id="content" class="wrap">
       <article class="prose">
-        <h1>YouTube in, article out</h1>
+        <h1>Article generation from YouTube</h1>
         <p class="note-meta">2025</p>
 
         <p>
-          I got tired of watching a video a second time in order to write it
-          down. TubeReader takes a YouTube URL and returns a formatted article.
-          Title, tone, theme, length, language. Public, unlisted, or private,
-          the same way you already think about a video.
-        </p>
-        <p>
-          A limited demo runs at
+          TubeReader takes a YouTube URL and returns a formatted article.
+          PHP handles accounts, billing, and generation. React renders the
+          dashboard and the public explore grid. A Flask service on Railway
+          fetches transcripts. A limited demo is at
           <a href="https://tubereader.practicalsoftware.com" target="_blank" rel="noopener noreferrer">tubereader.practicalsoftware.com</a>.
         </p>
 
-        <pre class="diagram" aria-label="TubeReader pipeline">
-  YouTube URL
-       |
-       +--> YouTube Data API v3     title, description, thumb
-       |
-       +--> transcript service      spoken words as text
-              (Flask, Railway)
-                    |
-                    v
-              OpenAI completions    article + title check
-                    |
-                    v
-              PHP store             public | unlisted | private
-                    |
-                    v
-              React dashboard       Material UI
-        </pre>
+        <div class="diagram mermaid" role="img" aria-label="TubeReader pipeline">
+flowchart TB
+  url["YouTube URL"] --> meta["YouTube Data API"]
+  url --> caps["Transcript service"]
+  n8n["n8n hourly"] --> cron["cron folder"]
+  meta --> gen
+  caps --> gen
+  cron --> gen["OpenAI completions"]
+  gen --> store["MySQL article store"]
+        </div>
 
-        <h2>Generate is a set of knobs, not a magic button</h2>
+        <h2>Generation options</h2>
         <p>
-          The generate screen is where the product opinion lives. A transcript
-          is not an article. Someone has to pick a tone, a length, a font, a
-          language. I would rather those choices be visible than hidden in a
-          prompt I will forget.
+          The generate screen is where the user picks tone, length, language,
+          point of view, structure, font, theme, and visibility before the
+          model runs. Paid accounts can save those choices as named presets
+          and attach a preset to a playlist or channel watcher. Custom titles
+          go through a separate moderation call so a public article does not
+          store a title that fails a general-audience check.
         </p>
         <figure>
           <img
@@ -103,65 +94,150 @@
             alt="TubeReader generate screen with article options."
           />
           <figcaption>
-            Generate. The URL is the easy part. The options are the product.
+            Generate. Length, tone, language, and visibility are set before
+            the request is sent.
           </figcaption>
         </figure>
         <p>
-          Custom titles go through the same model with a narrower job. Is this
-          title alright for a general audience. That is not a content-policy
-          department. It is a cheap check so a public article does not ship a
-          title I would not put on a school computer.
+          Credits scale with the article length target, then add a surcharge
+          from video duration. Free accounts stop at 20 minutes. Paid
+          accounts stop at 180. Music videos, official audio, ASMR, and
+          similar clips are rejected from YouTube category and title
+          heuristics, without a second model call. Videos under two minutes
+          are rejected as well.
         </p>
 
-        <h2>Two APIs, plus one I had to host</h2>
+        <h2>Hourly playlist and channel monitors</h2>
         <p>
-          YouTube Data API v3 is polite. It gives metadata if you ask correctly.
-          Transcripts are ruder. I self-hosted a Flask service on Railway that
-          wraps a transcript library, because I did not want the PHP app talking
-          to a moving target on someone else's laptop.
+          Paid users can watch a playlist or a channel. On create, the
+          current video ids are stored as a baseline so existing uploads are
+          not generated in bulk. An n8n schedule trigger runs once an hour
+          and POSTs to the scripts in the cron folder. Those endpoints are
+          not a public API. They require a shared secret in a header, compared
+          with <code>hash_equals</code>, and they cap each run at 50 monitors
+          and 30 new articles.
         </p>
-        <pre><code>POST /article
+        <pre><code>POST /php/cron/hourly-playlist.php
+X-Job-Key: &lt;secret&gt;
+
 {
-  "url": "https://www.youtube.com/watch?v=...",
-  "tone": "plain",
-  "length": "medium",
-  "visibility": "unlisted",
-  "language": "en"
+  "maxFeeds": 50,
+  "maxArticles": 30
 }</code></pre>
         <p>
-          PHP stores the result. React renders the dashboard and the explore
-          grid with Material UI, MUI X, and Swiper. Explore is the public shelf.
-          Dashboard is the workshop, and it requires a login.
+          The same n8n workflow calls a channel watcher in that folder. A
+          third script backfills plain-text search indexes for course packs.
+          A unique video id per watcher stops two overlapping hours from
+          writing the same article twice. Watchers skip free-plan accounts.
+        </p>
+
+        <h2>Dashboard and publishing</h2>
+        <p>
+          After login, the dashboard lists articles the user owns. Explore
+          queries only rows marked public, with the mature flag off. Unlisted
+          articles stay off that grid and are reachable by link. Private
+          articles require the owner session. Course packs group articles
+          into an ordered set, with MySQL full-text search over stored plain
+          text rather than the HTML file.
         </p>
         <figure>
           <img
             src="/images/Dashboard-TubeReader.png"
             alt="TubeReader dashboard of generated articles."
           />
-          <figcaption>Dashboard after login. Articles you actually own.</figcaption>
+          <figcaption>Dashboard after login.</figcaption>
         </figure>
         <figure>
           <img
             src="/images/Explore-TubeReader.png"
             alt="TubeReader explore page of public articles."
           />
-          <figcaption>Explore. Only what someone marked public.</figcaption>
+          <figcaption>Explore. Public articles only.</figcaption>
         </figure>
-
-        <h2>The unglamorous bits</h2>
         <p>
-          Registrations go through UserCheck so a disposable inbox does not
-          become an account. Batch upload and long videos were next. They are
-          still next. A SaaS is a pile of those sentences.
+          Copy helpers return HTML, Markdown, or a YouTube description draft.
+          Description chapters use caption timestamps from the transcript
+          service when those cues exist. The first description draft costs
+          one credit. PDF export allowlists thumbnail hosts so the renderer
+          cannot fetch an arbitrary URL.
+        </p>
+
+        <h2>Billing and access control</h2>
+        <p>
+          Stripe Checkout starts from a server-resolved product key. Amounts
+          never come from the client. Checkout success does not grant
+          credits by itself. A signed webhook writes the event, then
+          fulfillment runs. Duplicate deliveries are ignored through a unique
+          event id. Subscriptions reset plan credits on each paid invoice.
+          One-time packs add a separate top-up balance that renewals do not
+          clear. Usage burns plan credits first, then top-ups.
+        </p>
+        <pre><code>function consumeCredits($pdo, $userId, $amount) {
+  $pdo->beginTransaction();
+  $stmt = $pdo->prepare(
+    'SELECT usage_count, usage_limit, pack_credits
+       FROM users WHERE user_id = ? FOR UPDATE'
+  );
+  $stmt->execute([$userId]);
+  $row = $stmt->fetch();
+
+  $planLeft = max(0, $row['usage_limit'] - $row['usage_count']);
+  if ($planLeft + $row['pack_credits'] < $amount) {
+    $pdo->rollBack();
+    throw new RuntimeException('Insufficient credits');
+  }
+
+  $fromPlan = min($amount, $planLeft);
+  $fromPack = $amount - $fromPlan;
+  $pdo->prepare(
+    'UPDATE users
+        SET usage_count = usage_count + ?,
+            pack_credits = pack_credits - ?
+      WHERE user_id = ?'
+  )->execute([$fromPlan, $fromPack, $userId]);
+  $pdo->commit();
+  return ['from_plan' => $fromPlan, 'from_pack' => $fromPack];
+}</code></pre>
+        <p>
+          That is the spend path, not a production filename. The row lock
+          keeps two generate requests from racing the same balance. If the
+          model call fails after the debit, the same split is written back
+          so a failed article does not keep the credits.
         </p>
         <p>
-          What I learned is less "I used React" and more this. Once people can
-          log in, you are on the hook for visibility bugs. An unlisted article
-          that shows up on Explore is not a styling issue. It is the whole
-          product failing in one query.
+          Registration checks reCAPTCHA and rejects disposable inboxes.
+          Passwords are hashed. Session tokens are random bytes stored as a
+          SHA-256 hash, in an HttpOnly Secure SameSite Lax cookie. Logins,
+          generation, and password resets are rate limited. Mutation requests
+          must come from an allowlisted origin. An admin view, not linked
+          from the public navbar, lists billing rows, model cost, and error
+          logs.
         </p>
       </article>
-      <p class="note-nav"><a href="/notes/">All notes</a></p>
+      <p class="note-nav"><a href="/projects/">All projects</a></p>
     </main>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        securityLevel: "strict",
+        flowchart: { curve: "linear", padding: 10 },
+        themeVariables: {
+          fontFamily: "Inter, system-ui, sans-serif",
+          fontSize: "14px",
+          background: "#f1eee6",
+          primaryColor: "#faf8f4",
+          primaryTextColor: "#1c1916",
+          primaryBorderColor: "#cfc8bb",
+          lineColor: "#6f6a63",
+          secondaryColor: "#f4f1ea",
+          tertiaryColor: "#faf8f4",
+          clusterBkg: "#faf8f4",
+          clusterBorder: "#cfc8bb",
+          edgeLabelBackground: "#f1eee6",
+        },
+      });
+    </script>
   </body>
 </html>

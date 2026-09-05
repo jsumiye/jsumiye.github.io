@@ -6,7 +6,7 @@
     <title>A survey stack for K-12, from builder to PDF · Justin Sumiye</title>
     <meta
       name="description"
-      content="How a K-12 survey platform moved from legacy QST files to a builder, a database, and letter-size PDF reports."
+      content="How a K-12 survey platform moved from legacy QST files to a builder, roster access, MySQL, and letter-size PDF reports."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,8 +35,7 @@
           </svg>
         </a>
         <a href="/">home</a>
-        <a href="/projects/">projects</a>
-        <a href="/notes/" aria-current="page">notes</a>
+        <a href="/projects/" aria-current="page">projects</a>
         <a href="/resume/">resume</a>
         <div class="nav-social">
           <a href="https://www.linkedin.com/in/jsumiye" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -62,42 +61,49 @@
         <p class="note-meta">May 2025</p>
 
         <p>
-          A client sent a folder of <code>.qst</code> files and asked if the new
-          site could read them. I had not heard of the format. The files held
-          years of questions, school names, and response data from a system that
-          was not coming with us. The job was to keep that history and give
-          staff a builder that did not feel like 2009.
+          A client needed a replacement for a survey platform that was being
+          retired. The new system had to import existing <code>.qst</code>
+          files, support a survey builder, store roster credentials, and
+          generate letter-size PDF reports. The QST files contained school
+          names, question order, and historical response data that had to
+          remain usable.
         </p>
         <p>
-          This is private work for K-12 survey operations. I cannot link a demo.
-          I can walk through how a survey moves through the system, because that
-          is the part I still think about.
-        </p>
-
-        <pre class="diagram" aria-label="Survey system flow">
-  SurveyJS builder          public taker
-          \                    /
-           \                  /
-            +-->  MySQL  <---+
-                     |
-                     v
-              html2canvas
-                 jsPDF
-              letter-size
-                report
-        </pre>
-        <p>
-          Three surfaces share one database. The builder writes a survey. The
-          taker writes responses. Reporting reads both and draws charts that
-          have to line up across years.
+          This is private work, so there is no public demo. The sections below
+          describe how a survey moves through the system.
         </p>
 
-        <h2>The table that runs the week</h2>
+        <div class="diagram mermaid" role="img" aria-label="Survey system flow">
+flowchart TB
+  qst["QST / DAT / CSV"] --> db
+  builder["SurveyJS builder"] --> db
+  db[("MySQL
+surveys, responses, roster
+toolbox, templates, PDFs")]
+  db --> taker["Public taker
+slug + vanity
+roster fill
+open / expire"]
+  db --> reports["Reports
+single / compare
+Fuse.js"]
+  db --> pdf["/report/slug
+shareable PDF"]
+        </div>
         <p>
-          Most of the operational work happens on one screen. Category, author,
-          status. School, season, year. A count of responses. Opens-at and
-          expires-at, which sound like timestamps until a teacher needs a survey
-          to go live at midnight in a state you do not live in.
+          The builder writes a survey. The public taker writes responses.
+          Reporting reads both and draws charts that can be compared across
+          years. A roster CSV supplies per-student passwords when a survey is
+          not meant to be an open form.
+        </p>
+
+        <h2>Survey management</h2>
+        <p>
+          Staff work from one table. Each row includes category, author,
+          archive status, school, state, season, year, response count, and
+          optional open and expire times. Those timestamps are stored in UTC
+          and converted in the browser so a survey can open at a local
+          midnight in another time zone.
         </p>
         <figure>
           <img
@@ -105,79 +111,99 @@
             alt="Manage Surveys table with school names, response counts, visibility badges, and schedule pills."
           />
           <figcaption>
-            Manage Surveys. Import sits next to create, because a lot of the
-            catalog did not start in this app.
+            Manage Surveys. Import is available next to create, since much of
+            the catalog comes from the previous system.
           </figcaption>
         </figure>
         <p>
-          Visibility is private, unlisted, or public, shown as a small badge
-          rather than a settings maze. Sharing is a slug. Copy the link, or the
-          UI falls back if the clipboard call fails, because school machines are
-          not always in the mood.
+          Visibility is private, unlisted, or public. Private surveys stay in
+          the admin table. Unlisted surveys are reachable only by link. Public
+          surveys appear on the homepage after a state is selected, and only
+          while the schedule window is open. Each survey has an 8-character
+          slug and an optional vanity path such as
+          <code>/OH/oakridge-fall</code>. Apache rewrites that path to a
+          database lookup. The UI copies the link to the clipboard and falls
+          back to a visible URL if the clipboard API is unavailable.
         </p>
         <p>
-          DataTables handles sort, page, and a few custom filters. I care less
-          about the library than about the fact that a person can find last
-          fall's postgrad survey for a Texas high school without asking me.
+          Duplicate copies a survey so a new season does not start from a
+          blank form. DataTables provides sort, paging, and filters so staff
+          can find a prior-year survey by school without a custom query.
         </p>
 
-        <h2>Reading a format that wanted to stay</h2>
+        <h2>Legacy import</h2>
         <p>
-          The QST importer is the unglamorous center of the project. A file
-          comes in, sometimes with a CSV or DAT sibling. Metadata fields turn on
-          as the parser learns what it has. Get the school name wrong and you
-          have invented a campus. Get the question order wrong and a five-year
-          comparison chart lies.
+          The QST importer reads a <code>.qst</code> file and, optionally, a
+          CSV or DAT file of responses. A filename such as
+          <code>OH_OakridgeHigh2023.qst</code> is parsed for state, campus, and
+          school year. That campus guess is matched against existing school
+          names with a Levenshtein similarity cutoff of 0.7, after common
+          suffixes like "academy" and "high school" are stripped. A wrong
+          school name creates a duplicate campus. A wrong question order
+          breaks year-over-year charts.
         </p>
         <p>
-          I treat the parser as a pipeline with boring checkpoints, not a clever
-          one-liner.
+          The parser runs as a sequence of checks rather than a single
+          conversion step.
         </p>
         <pre><code>function ingestLegacySurvey(file, extras = {}) {
-  const qst = parseQst(file);
-  const rows = extras.csv ? parseCsv(extras.csv) : [];
+  const meta = parseQstFilename(file.name);
+  const school = findBestSchoolMatch(meta.schoolName);
+  const qst = parseQst(file, { school, ...meta });
+  const rows = extras.csv ? mapLegacyRows(qst, extras.csv) : [];
 
   assertQuestions(qst.questions);
-  if (rows.length) assertSchema(qst, rows);
+  if (rows.length) assertColumnCount(qst, rows);
 
-  return {
-    title: qst.title,
-    questions: qst.questions,
-    choices: qst.choices,
-    responses: rows,
-  };
+  return { title: qst.title, questions: qst.questions, responses: rows };
 }</code></pre>
         <p>
-          That is the shape, not a dump of the production file. The real parser
-          is pickier. Matrix questions flatten into rows. Choice ids have to
-          survive a round trip into SurveyJS so a teacher can edit an imported
-          survey without the toolbox offering a hundred question types they were
-          never supposed to see. The palette is curated on purpose.
+          That is the structure of the importer, not the production file.
+          Question type codes from the old system map to SurveyJS types.
+          Checkboxes expand to one column per choice. Matrix questions flatten
+          to one column per row. Some DAT files begin with
+          <code>RESPONSE_DATE=</code>, so the mapper skips those leading cells
+          instead of shifting answers. Choice ids are preserved so an imported
+          survey can be edited in SurveyJS. The builder toolbox is limited to
+          text, comment, checkbox, radiogroup, dropdown, matrix, and HTML.
+        </p>
+        <p>
+          Custom toolbox questions are stored in MySQL as JSON and loaded into
+          SurveyJS. Reusing the same question name, such as
+          <code>first_name</code>, keeps reports aligned across schools even
+          when the visible title differs.
         </p>
 
-        <h2>The database has to survive a school year</h2>
+        <h2>Student access and response data</h2>
         <p>
-          Features arrived after the first schema. I write migrations that keep
-          old rows valid. A new <code>opens_at</code> column cannot blank out
-          surveys that were already in the wild. Student-adjacent data means
-          I do not concatenate SQL, even when the table UI makes it tempting.
+          A survey may require a password. When it does, staff upload a CSV of
+          first name, last name, password, and optional student number,
+          program, and email. An upload replaces the existing roster for that
+          survey. It runs in a transaction, validates headers, and rejects a
+          row with an invalid email. The taker looks up the password and fills
+          hidden fields named <code>first_name</code> or
+          <code>student_number</code> when those columns have values. Empty
+          cells are left empty.
+        </p>
+        <p>
+          Emails sometimes arrive after responses have been submitted. A
+          backfill updates the roster and uses MySQL <code>JSON_SET</code> on
+          stored responses, matching on the password already in the JSON.
         </p>
         <pre><code>$stmt = $pdo->prepare(
-  'SELECT id, school_name, response_count
-     FROM surveys
-    WHERE author_id = :author
-      AND status = :status
-    ORDER BY updated_at DESC'
-);
-$stmt->execute([
-  ':author' => $authorId,
-  ':status' => $status,
-]);</code></pre>
+  'UPDATE survey_responses
+      SET json_schema = JSON_SET(json_schema, "$.email", ?)
+    WHERE survey_id = ?
+      AND (
+        JSON_UNQUOTE(JSON_EXTRACT(json_schema, "$.password")) = ?
+        OR JSON_UNQUOTE(JSON_EXTRACT(json_schema, "$.Password")) = ?
+      )'
+);</code></pre>
         <p>
-          State-changing posts check a CSRF token in a cookie and in the form.
-          Roles decide who sees another school's reports. Input is validated
-          before it hits the CSV replace path, because bulk upload is where
-          people paste the wrong year.
+          Exports keep question order from the schema, including checkbox
+          choice order, so a CSV can be downloaded and uploaded again without
+          column drift. Names with apostrophes and accented characters are
+          written through a UTF-8 endpoint.
         </p>
         <figure>
           <img
@@ -185,34 +211,51 @@ $stmt->execute([
             alt="Survey data management screen."
           />
           <figcaption>
-            Response data. Replace means replace. A partial paste should fail
-            loudly, not silently rewrite three columns.
+            Response data. A replace upload overwrites all existing responses
+            for the selected survey. Invalid rows are rejected rather than
+            applied in part.
           </figcaption>
         </figure>
-
-        <h2>Reports are the product</h2>
         <p>
-          Staff do not brag about a builder. They email a PDF. The report
-          pipeline detects questions that line up across surveys, flattens
-          matrix rows, and feeds html2canvas into jsPDF so the output is a
-          letter-size document with a header and footer that stay put when the
-          chart count gets rude.
+          Nightly MySQL dumps are stored on the host. Restore selects a single
+          survey from a SQL zip instead of importing the full dump.
         </p>
-        <pre class="diagram" aria-label="PDF report pipeline">
-  aligned questions
-          |
-          v
-  chart + table HTML  -->  html2canvas  -->  jsPDF pages
-                                              header
-                                              footer
-                                              letter, 8.5 x 11
-        </pre>
+
+        <h2>Reporting and PDF export</h2>
         <p>
-          Templates split into page templates and a more advanced set. Duplicate
-          and rename exist because nobody wants to rebuild last year's layout
-          from a blank page. Comparison charts are the feature I would keep if
-          I could keep only one. A single-year bar is a slide. A three-year
-          overlay is an argument.
+          Reports are built on a grid. Charts and tables can be dragged,
+          resized, centered, or deleted. Filtered summary tables can slice by
+          question, answer choice, or a demographic field. A layout can be
+          duplicated and renamed for a later year.
+        </p>
+        <p>
+          Comparison reports align questions across surveys. The matcher strips
+          leading numbers and punctuation, then runs Fuse.js on titles so
+          "4. I have a trusted adult at this school" can match
+          "I have a trusted adult at this school." Manual mapping is available
+          when a question was rewritten on purpose.
+        </p>
+        <p>
+          Page templates store empty chart frames. Advanced templates also
+          store which question name feeds each chart. Comparison templates
+          store the side-by-side layout.
+        </p>
+        <div class="diagram mermaid" role="img" aria-label="PDF report pipeline">
+flowchart TB
+  aligned["Aligned questions
+exact, then Fuse.js"] --> html["Chart + table HTML"]
+  html --> canvas["html2canvas"]
+  canvas --> jspdf["jsPDF pages
+header, footer
+letter, 8.5 x 11"]
+  jspdf --> file["/report/slug.pdf
+view_count, last_visited"]
+        </div>
+        <p>
+          html2canvas and jsPDF produce a letter-size document with a repeating
+          header and footer. Saving the file issues a shareable slug, serves
+          <code>application/pdf</code> inline, and increments a view count.
+          Report URLs are sent with a noindex robots header.
         </p>
         <figure>
           <img
@@ -220,21 +263,78 @@ $stmt->execute([
             alt="Generated survey report with charts and templated layout."
           />
           <figcaption>
-            A generated report. The interesting work is whether this year's
-            question is actually the same question as 2023.
+            A generated report. Comparison depends on matching this year's
+            questions to the previous year's questions.
           </figcaption>
         </figure>
 
-        <h2>What I would still change</h2>
-        <p>
-          Scheduling across time zones is more interesting than it looks, and
-          I am not done being suspicious of it. The importer could explain
-          itself better when a QST file is almost valid. The rest of the stack
-          is the kind of PHP, MySQL, and JavaScript that has to be boring on
-          purpose. Schools will still be opening these surveys next fall.
-        </p>
+        <h2>Notable security features</h2>
+        <ul>
+          <li>
+            Admin state-changing requests require a CSRF token in the
+            <code>X-CSRF-TOKEN</code> header or the <code>XSRF-TOKEN</code>
+            cookie, compared with the session token using
+            <code>hash_equals</code>.
+          </li>
+          <li>
+            Logins use <code>password_verify</code> against stored hashes and
+            return a generic error so valid emails cannot be enumerated.
+          </li>
+          <li>
+            Session cookies are HttpOnly, Secure on HTTPS, and SameSite Lax.
+          </li>
+          <li>
+            Database access uses prepared statements. Roster names, emails, and
+            student numbers are never concatenated into SQL.
+          </li>
+          <li>
+            Responses set <code>X-Content-Type-Options: nosniff</code>,
+            <code>X-Frame-Options: SAMEORIGIN</code>, and a Content-Security-Policy.
+            CORS is limited to an allowlist of site origins.
+          </li>
+          <li>
+            Uploads are rejected when the request body exceeds
+            <code>post_max_size</code>. PDF uploads are checked with
+            <code>finfo</code> before they are written to disk.
+          </li>
+          <li>
+            Backup restore runs filenames through <code>basename</code> and
+            <code>realpath</code> so a path cannot leave the backup directory.
+          </li>
+          <li>
+            CSV roster uploads validate required headers and email format
+            inside a transaction. Invalid rows abort the replace.
+          </li>
+          <li>
+            Shared PDF links are noindexed. Surveys can be private, unlisted,
+            or public, with optional per-student passwords.
+          </li>
+        </ul>
       </article>
-      <p class="note-nav"><a href="/notes/">All notes</a></p>
+      <p class="note-nav"><a href="/projects/">All projects</a></p>
     </main>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        securityLevel: "strict",
+        flowchart: { curve: "linear", padding: 10 },
+        themeVariables: {
+          fontFamily: "Inter, system-ui, sans-serif",
+          fontSize: "14px",
+          background: "#f1eee6",
+          primaryColor: "#faf8f4",
+          primaryTextColor: "#1c1916",
+          primaryBorderColor: "#cfc8bb",
+          lineColor: "#6f6a63",
+          secondaryColor: "#f4f1ea",
+          tertiaryColor: "#faf8f4",
+          clusterBkg: "#faf8f4",
+          clusterBorder: "#cfc8bb",
+          edgeLabelBackground: "#f1eee6",
+        },
+      });
+    </script>
   </body>
 </html>
