@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Justin Sumiye</title>
+    <title>Justin Sumiye · Resume</title>
     <meta
       name="description"
-      content="Justin Sumiye is a full stack developer in Honolulu. Survey software, university tools, and how they were built."
+      content="Justin Sumiye. Full stack developer in Honolulu. Practical Software, Korean Flagship Center, UH Mānoa."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,11 +17,11 @@
     <link rel="stylesheet" href="/styles.css" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" href="/images/portfoliofavicon.png" />
+    <link rel="prefetch" href="/" />
     <link rel="prefetch" href="/projects/" />
-    <link rel="prefetch" href="/resume/" />
     <meta name="theme-color" content="#faf8f4" />
   </head>
-  <body>
+  <body class="page-resume">
     <a class="skip" href="#content">Skip to content</a>
     <header class="site-header">
       <nav class="nav" aria-label="Primary">
@@ -36,9 +36,9 @@
             <rect x="7.4" y="9.2" width="9.2" height="2.1" rx="0.35" fill="currentColor" />
           </svg>
         </a>
-        <a href="/" aria-current="page">home</a>
+        <a href="/">home</a>
         <a href="/projects/">projects</a>
-        <a href="/resume/">resume</a>
+        <a href="/resume/" aria-current="page">resume</a>
         <div class="nav-social">
           <a
             href="https://www.linkedin.com/in/jsumiye"
@@ -68,28 +68,37 @@
     </header>
 
     <main id="content" class="wrap">
-      <div class="bio">
-        <div class="bio-text">
-          <h1>...who's Justin Sumiye?</h1>
-          <p class="lede">
-            I build web applications in Honolulu. Most of the work is full stack.
-            Survey software for schools, tools for a university language program,
-            and the occasional side project that starts as a question.
-          </p>
-          <p class="lede lede-last">
-            I wrote my first programs at eight, in Scratch and LEGO robots. Now I
-            study computer science at UH Mānoa, with a cybersecurity concentration.
-            When I am
-            away from my desk, I am usually bowling, playing the piano, or learning a new skill.
-          </p>
+      <div class="resume-id">
+        <h1>Justin Sumiye</h1>
+        <p class="resume-place">Honolulu, HI</p>
+        <p class="resume-line">
+          Full stack developer. Computer science at UH Mānoa, cybersecurity.
+        </p>
+      </div>
+
+      <h2>Experience</h2>
+      <div class="resume-row">
+        <div>
+          <strong>Practical Software</strong> · Full Stack Software Engineer
+          <p>K-12 survey software. Builder, responses, reporting, schema, CI.</p>
         </div>
-        <img
-          class="portrait"
-          src="/images/justin-klfc-c.jpg"
-          alt="Justin Sumiye"
-          width="120"
-          height="120"
-        />
+        <span class="when">2025 to now</span>
+      </div>
+      <div class="resume-row">
+        <div>
+          <strong>Korean Flagship Center</strong> · Web Developer
+          <p>Application forms, trivia game, and course simulation tools.</p>
+        </div>
+        <span class="when">2023 to now</span>
+      </div>
+
+      <h2>Education</h2>
+      <div class="resume-row">
+        <div>
+          <strong>University of Hawaiʻi at Mānoa</strong>
+          <p>B.S. Computer Science, cybersecurity concentration</p>
+        </div>
+        <span class="when">In progress</span>
       </div>
 
       <h2>Skills</h2>
@@ -113,54 +122,33 @@
         <span class="skill-label">Servers</span>
         <span class="skill-list">Vercel, Railway, Apache</span>
       </div>
-      <div class="skill-row section-end">
+      <div class="skill-row">
         <span class="skill-label">Tools</span>
         <span class="skill-list">Git, GitHub Actions, npm, Vite</span>
       </div>
 
-      <h2>Things I've done</h2>
+      <h2>Projects</h2>
       <div class="entry">
-        <a href="/notes/survey-platform/"
-          >Shipped a K-12 survey platform from builder to PDF reports</a
-        >
-        <span class="entry-meta">May 2025</span>
+        <a href="/notes/survey-platform/">Survey platform</a>
+        <span class="entry-meta">builder through PDF reports</span>
       </div>
       <div class="entry">
-        <a href="/notes/hawaii-open-data/"
-          >Finalist in the Hawaii Annual Code Challenge</a
-        >
-        <span class="entry-meta">2024</span>
+        <a href="/notes/hawaii-open-data/">Hawaii Open Data Explorer</a>
+        <span class="entry-meta">HACC 2024 finalist</span>
       </div>
       <div class="entry">
-        <a href="/notes/manoa-menu/"
-          >Built multilingual dining menus for UH Mānoa international students</a
-        >
-        <span class="entry-meta">2024</span>
+        <a href="/notes/manoa-menu/">Manoa Menu</a>
+        <span class="entry-meta">bilingual campus dining</span>
       </div>
-      <div class="entry section-end">
-        <a href="/notes/korean-trivia/"
-          >Ran a Korean culture trivia game past 150 plays</a
-        >
-        <span class="entry-meta">2024</span>
+      <div class="entry">
+        <a href="/notes/tubereader/">TubeReader</a>
+        <span class="entry-meta">YouTube to article</span>
       </div>
-      <p class="more">
-        <a href="/projects/"
-          >View all projects
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M7 7h10v10" />
-            <path d="M7 17 17 7" />
-          </svg>
-        </a>
-      </p>
 
-      <p class="colophon">
-        Honolulu
-        <span class="lane" aria-hidden="true">
-          <span class="lane-ball"></span>
-          <span class="lane-pin"></span>
-          <span class="lane-pin"></span>
-          <span class="lane-pin"></span>
-        </span>
+      <p class="resume-contact">
+        <a href="mailto:portfolio@practicalsoftware.com">email</a>
+        <a href="https://github.com/jsumiye" target="_blank" rel="noopener noreferrer">github</a>
+        <a href="https://www.linkedin.com/in/jsumiye" target="_blank" rel="noopener noreferrer">linkedin</a>
       </p>
     </main>
   </body>
