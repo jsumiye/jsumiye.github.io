@@ -244,13 +244,6 @@ h3 {
   flex-shrink: 0;
 }
 
-.stack {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-top: 0.35rem;
-}
-
 @media (max-width: 700px) {
   .bio {
     flex-direction: column-reverse;
@@ -261,6 +254,38 @@ h3 {
     width: 96px;
     height: 96px;
     margin-top: 0;
+  }
+}
+
+/* Skills */
+
+.skill-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+
+.skill-label {
+  flex: 0 0 7.5rem;
+  color: var(--muted);
+}
+
+.skill-list {
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .skill-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.05rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-label {
+    flex: none;
+    font-size: 0.92rem;
   }
 }
 
@@ -545,6 +570,114 @@ a.still:hover {
   font-size: 0.95rem;
 }
 
+/* Bowling: a lane under the word, a strike by Honolulu */
+
+.lane-ball {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background:
+    radial-gradient(circle at 33% 34%, var(--bg) 0 1.1px, transparent 1.2px),
+    radial-gradient(circle at 58% 28%, var(--bg) 0 1.1px, transparent 1.2px),
+    radial-gradient(circle at 40% 56%, var(--bg) 0 1.1px, transparent 1.2px),
+    var(--muted);
+  opacity: 0.72;
+}
+
+.bowl {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.22em;
+}
+
+.bowl::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.14em;
+  height: 1px;
+  background: var(--line);
+}
+
+.bowl .lane-ball {
+  position: absolute;
+  left: 0.04em;
+  bottom: 0.03em;
+  opacity: 0.8;
+  transition: left 700ms cubic-bezier(0.22, 0.72, 0.28, 1),
+    transform 700ms cubic-bezier(0.22, 0.72, 0.28, 1);
+}
+
+.bowl:hover .lane-ball {
+  left: calc(100% - 9px);
+  transform: rotate(240deg);
+}
+
+.lane {
+  display: inline-flex;
+  align-items: flex-end;
+  height: 14px;
+  margin-left: 0.2rem;
+}
+
+.lane .lane-ball {
+  margin-right: 0.9rem;
+  transition: transform 620ms cubic-bezier(0.22, 0.72, 0.28, 1);
+}
+
+.lane-pin {
+  position: relative;
+  width: 6px;
+  height: 13px;
+  flex-shrink: 0;
+  transform-origin: 50% 92%;
+  transition: transform 420ms ease;
+}
+
+.lane-pin::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 5px;
+  height: 12px;
+  transform: translateX(-50%);
+  background: var(--muted);
+  border-radius: 50% 50% 30% 30% / 16% 16% 34% 34%;
+  opacity: 0.5;
+}
+
+.lane-pin::after {
+  content: "";
+  position: absolute;
+  top: 3.5px;
+  left: 0.5px;
+  right: 0.5px;
+  height: 1.5px;
+  background: var(--bg);
+}
+
+.colophon:hover .lane .lane-ball {
+  transform: translateX(0.9rem) rotate(210deg);
+}
+
+.colophon:hover .lane-pin:nth-child(2) {
+  transform: rotate(-44deg) translate(-1px, 1px);
+  transition-delay: 360ms;
+}
+
+.colophon:hover .lane-pin:nth-child(3) {
+  transform: rotate(8deg) translateY(1px);
+  transition-delay: 400ms;
+}
+
+.colophon:hover .lane-pin:nth-child(4) {
+  transform: rotate(50deg) translate(1px, 1px);
+  transition-delay: 380ms;
+}
+
 /* Footer / colophon */
 
 .colophon {
@@ -554,23 +687,6 @@ a.still:hover {
   margin-top: 3.25rem;
   color: var(--muted);
   font-size: 0.88rem;
-}
-
-.marks {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--accent);
-}
-
-.marks svg {
-  width: 14px;
-  height: 18px;
-}
-
-.marks .note-icon {
-  width: 14px;
-  height: 14px;
 }
 
 /* 404 */
@@ -595,6 +711,19 @@ a.still:hover {
 
   .logo:hover svg {
     transform: none;
+  }
+
+  .bowl:hover .lane-ball,
+  .colophon:hover .lane .lane-ball,
+  .colophon:hover .lane-pin {
+    transform: none;
+    left: 0.04em;
+  }
+
+  .colophon:hover .lane-pin:nth-child(2),
+  .colophon:hover .lane-pin:nth-child(3),
+  .colophon:hover .lane-pin:nth-child(4) {
+    transition-delay: 0s;
   }
 }
 
