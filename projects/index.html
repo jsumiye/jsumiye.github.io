@@ -6,8 +6,20 @@
     <title>Justin Sumiye · Projects</title>
     <meta
       name="description"
-      content="Projects by Justin Sumiye. Survey software, university tools, and a few experiments."
+      content="Projects by Justin Sumiye. A production K-12 survey platform, TubeReader, a Hawaii open-data finalist, and university tools."
     />
+    <link rel="canonical" href="https://jsumiye.github.io/projects/" />
+    <meta property="og:title" content="Justin Sumiye · Projects" />
+    <meta
+      property="og:description"
+      content="A production K-12 survey platform, TubeReader, a Hawaii open-data finalist, and university tools."
+    />
+    <meta property="og:url" content="https://jsumiye.github.io/projects/" />
+    <meta property="og:image" content="https://jsumiye.github.io/images/justin-klfc-c.jpg" />
+    <meta property="og:image:alt" content="Portrait of Justin Sumiye" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -28,7 +40,7 @@
         <a class="logo" href="/" aria-label="Home">
           <svg viewBox="0 0 24 32" aria-hidden="true">
             <path
-              d="M12 2c-2.3 0-4.1 1.8-4.1 4.2 0 1.5.5 2.8 1.1 4.2.4.9.7 1.8.7 2.9 0 1.1-.7 2.2-1.5 3.9-.8 1.7-1.3 3.6-1.1 5.2.2 1.9 1.8 3.2 4.9 3.2s4.7-1.3 4.9-3.2c.2-1.6-.3-3.5-1.1-5.2-.8-1.7-1.5-2.8-1.5-3.9 0-1.1.3-2 .7-2.9.6-1.4 1.1-2.7 1.1-4.2C16.1 3.8 14.3 2 12 2z"
+              d="M12 2c-2.3 0-4.1 1.8-4.1 4.2 0 1.5.5 2.8 1.1 4.2.4.9.7 1.8.7 2.9 0 1.1-.7 2.2-1.5 3.9-.8-1.7-1.3 3.6-1.1 5.2.2 1.9 1.8 3.2 4.9 3.2s4.7-1.3 4.9-3.2c.2-1.6-.3-3.5-1.1-5.2-.8-1.7-1.5-2.8-1.5-3.9 0-1.1.3-2 .7-2.9.6-1.4 1.1-2.7 1.1-4.2C16.1 3.8 14.3 2 12 2z"
               fill="none"
               stroke="currentColor"
               stroke-width="1.5"
@@ -69,6 +81,10 @@
 
     <main id="content" class="wrap">
       <h1>Projects</h1>
+      <p class="lede">
+        Software from a job, a university language center, and projects I kept
+        after the assignment ended. Coursework is at the bottom.
+      </p>
 
       <article class="project-block">
         <h2><a href="/notes/survey-platform/">Survey platform</a></h2>
@@ -78,19 +94,46 @@
           <li>SurveyJS</li>
         </ul>
         <p>
-          Builder, response data, and letter-size PDF reports for K-12 schools.
-          Reads old QST files so years of surveys do not have to be retyped.
+          Builder, roster access, legacy QST import, and letter-size PDF
+          reports for K-12 schools. In production: 900+ surveys and 70,000+
+          responses. Private company project.
         </p>
         <p class="links">
           <a class="writeup" href="/notes/survey-platform/">Writeup</a>
-          <span>Private company project</span>
+          <span>No public demo</span>
         </p>
-        <a class="still" href="/notes/survey-platform/" tabindex="-1">
+        <a class="still" href="/notes/survey-platform/" tabindex="-1" aria-hidden="true">
           <img
-            src="/images/Survey-Manage.png"
-            alt="Manage Surveys table with school names, response counts, and schedule pills."
+            src="/images/Survey-Manage.jpg"
+            alt=""
             loading="lazy"
-          />
+          width="1600" height="762" decoding="async">
+        </a>
+      </article>
+
+      <article class="project-block">
+        <h2><a href="/notes/tubereader/">TubeReader</a></h2>
+        <ul class="stack" aria-label="Tech stack">
+          <li>PHP</li>
+          <li>Flask</li>
+          <li>MySQL</li>
+          <li>React</li>
+        </ul>
+        <p>
+          Turns a YouTube video into an article in under 30 seconds. PHP
+          handles accounts, Stripe credits, and hourly playlist monitors. A
+          Flask service on Railway fetches transcripts.
+        </p>
+        <p class="links">
+          <a class="writeup" href="/notes/tubereader/">Writeup</a>
+          <a href="https://tubereader.practicalsoftware.com" target="_blank" rel="noopener noreferrer">Limited demo</a>
+        </p>
+        <a class="still" href="/notes/tubereader/" tabindex="-1" aria-hidden="true">
+          <img
+            src="/images/Generate-TubeReader.jpg"
+            alt=""
+            loading="lazy"
+          width="1600" height="799" decoding="async">
         </a>
       </article>
 
@@ -102,19 +145,21 @@
           <li>Express</li>
         </ul>
         <p>
-          Search, filter, and chart Hawaii government datasets. Finalist in the
-          2024 Hawaii Annual Code Challenge.
+          Catalog search over Hawaii's public datasets. I was a frontend
+          developer on the team: search, sort, cards, bookmarks, and chart
+          download. GPT-4 runs on the server for chart plans and dataset chat.
+          Finalist in the 2024 Hawaii Annual Code Challenge.
         </p>
         <p class="links">
           <a class="writeup" href="/notes/hawaii-open-data/">Writeup</a>
           <a href="https://ool-frontend.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
         </p>
-        <a class="still" href="/notes/hawaii-open-data/" tabindex="-1">
+        <a class="still" href="/notes/hawaii-open-data/" tabindex="-1" aria-hidden="true">
           <img
-            src="/images/OOL-Main.png"
-            alt="Hawaii Open Data Explorer catalog with search, filters, and dataset cards."
+            src="/images/OOL-Main.jpg"
+            alt=""
             loading="lazy"
-          />
+          width="1600" height="799" decoding="async">
         </a>
       </article>
 
@@ -135,36 +180,12 @@
           <a href="https://manoa-menu.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
           <a href="https://github.com/manoa-menu/manoa-menu" target="_blank" rel="noopener noreferrer">Repo</a>
         </p>
-        <a class="still" href="/notes/manoa-menu/" tabindex="-1">
+        <a class="still" href="/notes/manoa-menu/" tabindex="-1" aria-hidden="true">
           <img
-            src="/images/menu-cc-jp.png"
-            alt="Manoa Menu weekly Campus Center menu in Japanese."
+            src="/images/menu-cc-jp.jpg"
+            alt=""
             loading="lazy"
-          />
-        </a>
-      </article>
-
-      <article class="project-block">
-        <h2><a href="/notes/tubereader/">TubeReader</a></h2>
-        <ul class="stack" aria-label="Tech stack">
-          <li>PHP</li>
-          <li>React</li>
-          <li>MySQL</li>
-        </ul>
-        <p>
-          Turns a YouTube URL into a formatted article with tone, theme, and
-          visibility controls.
-        </p>
-        <p class="links">
-          <a class="writeup" href="/notes/tubereader/">Writeup</a>
-          <a href="https://tubereader.practicalsoftware.com" target="_blank" rel="noopener noreferrer">Limited demo</a>
-        </p>
-        <a class="still" href="/notes/tubereader/" tabindex="-1">
-          <img
-            src="/images/Generate-TubeReader.png"
-            alt="TubeReader generate screen with article options."
-            loading="lazy"
-          />
+          width="1600" height="766" decoding="async">
         </a>
       </article>
 
@@ -176,30 +197,62 @@
           <li>Material UI</li>
         </ul>
         <p>
-          Trivia for the Korean Flagship Center's Culture Day. Hosted on the
-          program site. Past 150 plays.
+          Sixteen questions for the Korean Language Flagship Center's Culture
+          Day. No accounts. Hosted on the program site. Past 150 plays.
         </p>
         <p class="links">
           <a class="writeup" href="/notes/korean-trivia/">Writeup</a>
           <a href="https://koreanflagship.manoa.hawaii.edu/trivia/" target="_blank" rel="noopener noreferrer">Live</a>
         </p>
-        <a class="still" href="/notes/korean-trivia/" tabindex="-1">
+        <a class="still" href="/notes/korean-trivia/" tabindex="-1" aria-hidden="true">
           <img
-            src="/images/Trivia-Question.png"
-            alt="Culture trivia prompt with four color-coded answer rows."
+            src="/images/Trivia-Question.jpg"
+            alt=""
             loading="lazy"
-          />
+          width="1299" height="774" decoding="async">
         </a>
       </article>
 
       <article class="project-block">
-        <h2>KOR411 company simulation</h2>
+        <h2><a href="/notes/decision-letters/">Decision letters</a></h2>
+        <ul class="stack" aria-label="Tech stack">
+          <li>PHP</li>
+          <li>FPDF</li>
+        </ul>
         <p>
-          A mock Korean company site for a UH business-Korean course. Students
-          read job listings and apply by email. n8n is being wired in so the
-          professor is not the entire HR department.
+          Staff were filling Flagship decision letters by hand. A short PHP
+          page takes a name, a date, and an accept or deny, then writes a PDF
+          on the letterhead. Internal tool.
         </p>
+        <p class="links">
+          <a class="writeup" href="/notes/decision-letters/">Writeup</a>
+          <span>Internal</span>
+        </p>
+        <a class="still" href="/notes/decision-letters/" tabindex="-1" aria-hidden="true">
+          <img
+            src="/images/klfc-generate.jpg"
+            alt=""
+            loading="lazy"
+          width="1600" height="781" decoding="async">
+        </a>
       </article>
+
+      <section class="coursework">
+        <h2>Coursework</h2>
+        <article class="project-block">
+          <h3>SEED 2.0 network security labs</h3>
+          <ul class="stack" aria-label="Tech stack">
+            <li>Linux</li>
+            <li>Wireshark</li>
+            <li>Scapy</li>
+          </ul>
+          <p>
+            Computer and network security coursework. Hands-on labs use Linux
+            commands, Wireshark, and Python Scapy to inspect network traffic
+            and study security behavior.
+          </p>
+        </article>
+      </section>
 
       <p class="colophon">
         Honolulu
@@ -211,5 +264,6 @@
         </span>
       </p>
     </main>
+    <script src="/scripts.js" defer></script>
   </body>
 </html>
