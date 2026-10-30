@@ -14,6 +14,7 @@
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --measure: 44rem;
   --ease: 160ms ease;
+  --lift: 240ms cubic-bezier(0.22, 0.72, 0.28, 1);
 }
 
 *,
@@ -168,6 +169,11 @@ a:focus-visible {
 .nav-social svg {
   width: 16px;
   height: 16px;
+  transition: transform var(--lift);
+}
+
+.nav-social a:hover svg {
+  transform: translateY(-2px);
 }
 
 /* Main column */
@@ -264,6 +270,13 @@ h3 {
   border-radius: 4px;
   margin-top: 0.55rem;
   flex-shrink: 0;
+  transition: transform var(--lift), border-color var(--ease), box-shadow var(--lift);
+}
+
+.portrait:hover {
+  transform: translateY(-3px);
+  border-color: rgba(154, 59, 47, 0.4);
+  box-shadow: 0 10px 22px rgba(28, 25, 22, 0.07);
 }
 
 @media (max-width: 700px) {
@@ -285,12 +298,24 @@ h3 {
   display: flex;
   align-items: baseline;
   gap: 1.25rem;
-  margin-bottom: 0.4rem;
+  margin: 0 -0.4rem 0.4rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  transition: background-color var(--ease);
+}
+
+.skill-row:hover {
+  background-color: rgba(28, 25, 22, 0.035);
 }
 
 .skill-label {
   flex: 0 0 8.25rem;
   color: var(--muted);
+  transition: color var(--ease);
+}
+
+.skill-row:hover .skill-label {
+  color: var(--text);
 }
 
 .skill-list {
@@ -314,11 +339,41 @@ h3 {
 /* Notebook rows */
 
 .entry {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 1.25rem;
-  margin-bottom: 0.5rem;
+  margin: 0 -0.45rem 0.5rem -0.65rem;
+  padding: 0.16rem 0.45rem 0.16rem 0.65rem;
+  border-radius: 4px;
+  transition: background-color var(--ease);
+}
+
+.entry::before {
+  content: "";
+  position: absolute;
+  left: 0.22rem;
+  top: 0.42rem;
+  bottom: 0.42rem;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  opacity: 0;
+  transform: scaleY(0.4);
+  transform-origin: center;
+  transition: opacity var(--lift), transform var(--lift);
+}
+
+.entry:hover,
+.entry:focus-within {
+  background-color: rgba(154, 59, 47, 0.045);
+}
+
+.entry:hover::before,
+.entry:focus-within::before {
+  opacity: 0.85;
+  transform: scaleY(1);
 }
 
 .entry a {
@@ -341,6 +396,13 @@ h3 {
   color: var(--muted);
   flex-shrink: 0;
   text-align: right;
+  transition: color var(--ease), transform var(--lift);
+}
+
+.entry:hover .entry-meta,
+.entry:focus-within .entry-meta {
+  color: var(--text);
+  transform: translateX(2px);
 }
 
 .section-end {
@@ -363,6 +425,12 @@ h3 {
 .more svg {
   width: 13px;
   height: 13px;
+  transition: transform var(--lift);
+}
+
+.more a:hover svg,
+.more a:focus-visible svg {
+  transform: translate(2px, -2px);
 }
 
 @media (max-width: 700px) {
@@ -466,12 +534,15 @@ h3 {
   line-height: 1.2;
   padding: 0.32rem 0.75rem;
   border-radius: 4px;
+  transition: background-color var(--ease), transform var(--lift);
 }
 
-.project-block .writeup:hover {
+.project-block .writeup:hover,
+.project-block .writeup:focus-visible {
   color: var(--bg);
   background: #7e2f25;
   text-decoration: none;
+  transform: translateY(-1px);
 }
 
 .project-block .still {
@@ -490,6 +561,12 @@ a.still:hover {
 
 .project-block .still img {
   width: 100%;
+  transition: transform 520ms cubic-bezier(0.22, 0.72, 0.28, 1);
+}
+
+a.still:hover img,
+a.still:focus-visible img {
+  transform: scale(1.025);
 }
 
 .coursework {
@@ -537,7 +614,14 @@ a.still:hover {
   justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
-  margin-bottom: 0.65rem;
+  margin: 0 -0.4rem 0.65rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  transition: background-color var(--ease);
+}
+
+.resume-row:hover {
+  background-color: rgba(28, 25, 22, 0.035);
 }
 
 .resume-row .when {
@@ -596,6 +680,12 @@ a.still:hover {
 .resume-contact .icon-link svg {
   width: 16px;
   height: 16px;
+  transition: transform var(--lift);
+}
+
+.resume-contact .icon-link:hover svg,
+.resume-contact .icon-link:focus-visible svg {
+  transform: translateY(-2px);
 }
 
 .resume-contact .icon-link:hover {
@@ -844,6 +934,74 @@ a.still:hover {
 
 /* Motion */
 
+@keyframes settle {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0.4;
+    translate: 0 8px;
+  }
+}
+
+@keyframes header-shade {
+  to {
+    box-shadow: 0 8px 22px rgba(28, 25, 22, 0.05);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bio {
+    animation: settle 560ms cubic-bezier(0.22, 0.72, 0.28, 1) both;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .site-header {
+      animation: header-shade linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 72px;
+    }
+  }
+
+  @supports (animation-range: entry 0% entry 72px) {
+    .wrap > h2,
+    .coursework > h2,
+    .entry,
+    .more,
+    .resume-block,
+    .skill-row,
+    .project-block,
+    .year,
+    .colophon,
+    .note-meta,
+    .prose h2,
+    .prose figure,
+    .prose .diagram {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 72px;
+    }
+
+    .wrap > h2:focus-within,
+    .coursework > h2:focus-within,
+    .entry:focus-within,
+    .more:focus-within,
+    .resume-block:focus-within,
+    .skill-row:focus-within,
+    .project-block:focus-within,
+    .prose h2:focus-within,
+    .prose figure:focus-within {
+      animation: none;
+      opacity: 1;
+      translate: none;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -856,7 +1014,21 @@ a.still:hover {
     transition: none !important;
   }
 
-  .logo:hover svg {
+  .logo:hover svg,
+  .portrait:hover,
+  .more a:hover svg,
+  .more a:focus-visible svg,
+  .nav-social a:hover svg,
+  .resume-contact .icon-link:hover svg,
+  .resume-contact .icon-link:focus-visible svg,
+  a.still:hover img,
+  a.still:focus-visible img,
+  .project-block .writeup:hover,
+  .project-block .writeup:focus-visible,
+  .entry:hover .entry-meta,
+  .entry:focus-within .entry-meta,
+  .entry:hover::before,
+  .entry:focus-within::before {
     transform: none;
   }
 
@@ -895,5 +1067,25 @@ a.still:hover {
 
   a {
     text-decoration: none;
+  }
+
+  .bio,
+  .wrap > h2,
+  .entry,
+  .more,
+  .resume-block,
+  .skill-row,
+  .project-block,
+  .year,
+  .colophon,
+  .note-meta,
+  .prose h2,
+  .prose figure,
+  .prose .diagram,
+  .site-header {
+    animation: none !important;
+    opacity: 1 !important;
+    translate: none !important;
+    box-shadow: none !important;
   }
 }
