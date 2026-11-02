@@ -7,7 +7,9 @@
   --muted: #6f6a63;
   --line: #e4dfd6;
   --link-line: rgba(28, 25, 22, 0.28);
-  --accent: #9a3b2f;
+  --accent: #5d3fd3;
+  --accent-deep: #4630ad;
+  --accent-rgb: 93, 63, 211;
   --code-bg: #f1eee6;
   --serif: "EB Garamond", "Iowan Old Style", Georgia, serif;
   --sans: Inter, system-ui, sans-serif;
@@ -56,7 +58,7 @@ a {
 
 a:hover {
   color: var(--accent);
-  text-decoration-color: rgba(154, 59, 47, 0.45);
+  text-decoration-color: rgba(var(--accent-rgb), 0.45);
 }
 
 a:focus-visible {
@@ -65,7 +67,7 @@ a:focus-visible {
 }
 
 ::selection {
-  background: #ead8d4;
+  background: #e3daf6;
   color: var(--text);
 }
 
@@ -275,7 +277,7 @@ h3 {
 
 .portrait:hover {
   transform: translateY(-3px);
-  border-color: rgba(154, 59, 47, 0.4);
+  border-color: rgba(var(--accent-rgb), 0.4);
   box-shadow: 0 10px 22px rgba(28, 25, 22, 0.07);
 }
 
@@ -367,7 +369,7 @@ h3 {
 
 .entry:hover,
 .entry:focus-within {
-  background-color: rgba(154, 59, 47, 0.045);
+  background-color: rgba(var(--accent-rgb), 0.045);
 }
 
 .entry:hover::before,
@@ -385,7 +387,7 @@ h3 {
 }
 
 .project-block :is(h2, h3) a:hover {
-  text-decoration-color: rgba(154, 59, 47, 0.45);
+  text-decoration-color: rgba(var(--accent-rgb), 0.45);
 }
 
 .entry a:hover {
@@ -540,7 +542,7 @@ h3 {
 .project-block .writeup:hover,
 .project-block .writeup:focus-visible {
   color: var(--bg);
-  background: #7e2f25;
+  background: var(--accent-deep);
   text-decoration: none;
   transform: translateY(-1px);
 }
@@ -556,7 +558,7 @@ h3 {
 }
 
 a.still:hover {
-  border-color: rgba(154, 59, 47, 0.45);
+  border-color: rgba(var(--accent-rgb), 0.45);
 }
 
 .project-block .still img {

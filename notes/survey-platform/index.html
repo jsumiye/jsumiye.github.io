@@ -77,15 +77,13 @@
 
         <p>
           A client needed a replacement for a survey platform that was being
-          retired. The new system had to import existing <code>.qst</code>
-          files, support a survey builder, store roster credentials, and
-          generate letter-size PDF reports. The QST files contained school
-          names, question order, and historical response data that had to
-          remain usable.
+          retired. The new system had to import the old survey files, support
+          a survey builder, store roster credentials, and generate letter-size
+          PDF reports. Those files contained school names, question order, and
+          historical response data that had to remain usable.
         </p>
         <p>
-          This is private work, so there is no public demo. The sections below
-          describe how a survey moves through the system.
+          The sections below describe how a survey moves through the system.
         </p>
 
         <div class="diagram mermaid" role="img" aria-label="Survey system flow">
@@ -95,14 +93,13 @@ flowchart TB
   db[("MySQL
 surveys, responses, roster
 toolbox, templates, PDFs")]
-  db --> taker["Public taker
-slug + vanity
+  db --> slug["Slug + vanity
+public taker
 roster fill
 open / expire"]
   db --> reports["Reports
-single / compare
-Fuse.js"]
-  db --> pdf["/report/slug
+single / compare"]
+  reports --> pdf["/report/slug
 shareable PDF"]
         </div>
         <p>
@@ -134,91 +131,59 @@ shareable PDF"]
           Visibility is private, unlisted, or public. Private surveys stay in
           the admin table. Unlisted surveys are reachable only by link. Public
           surveys appear on the homepage after a state is selected, and only
-          while the schedule window is open. Each survey has an 8-character
-          slug and an optional vanity path such as
-          <code>/OH/oakridge-fall</code>. Apache rewrites that path to a
-          database lookup. The UI copies the link to the clipboard and falls
-          back to a visible URL if the clipboard API is unavailable.
+          while the schedule window is open. Each survey has a short slug and
+          an optional vanity path. Staff can copy the link, and the URL stays
+          visible if the clipboard is unavailable.
         </p>
         <p>
           Duplicate copies a survey so a new season does not start from a
-          blank form. DataTables provides sort, paging, and filters so staff
-          can find a prior-year survey by school without a custom query.
+          blank form. The table sorts, pages, and filters so staff can find a
+          prior-year survey by school.
         </p>
 
         <h2>Legacy import</h2>
         <p>
-          The QST importer reads a <code>.qst</code> file and, optionally, a
-          CSV or DAT file of responses. A filename such as
-          <code>OH_OakridgeHigh2023.qst</code> is parsed for state, campus, and
-          school year. That campus guess is matched against existing school
-          names with a Levenshtein similarity cutoff of 0.7, after common
-          suffixes like "academy" and "high school" are stripped. A wrong
-          school name creates a duplicate campus. A wrong question order
-          breaks year-over-year charts.
+          The importer reads a legacy survey file and, optionally, a file of
+          responses. The filename is parsed for state, campus, and school
+          year. That campus guess is matched against existing school names
+          after common suffixes like "academy" and "high school" are stripped.
+          A wrong school name creates a duplicate campus. A wrong question
+          order breaks year-over-year charts.
         </p>
         <p>
           The parser runs as a sequence of checks rather than a single
-          conversion step.
-        </p>
-        <pre><code>function ingestLegacySurvey(file, extras = {}) {
-  const meta = parseQstFilename(file.name);
-  const school = findBestSchoolMatch(meta.schoolName);
-  const qst = parseQst(file, { school, ...meta });
-  const rows = extras.csv ? mapLegacyRows(qst, extras.csv) : [];
-
-  assertQuestions(qst.questions);
-  if (rows.length) assertColumnCount(qst, rows);
-
-  return { title: qst.title, questions: qst.questions, responses: rows };
-}</code></pre>
-        <p>
-          That is the structure of the importer, not the production file.
-          Question type codes from the old system map to SurveyJS types.
-          Checkboxes expand to one column per choice. Matrix questions flatten
-          to one column per row. Some DAT files begin with
-          <code>RESPONSE_DATE=</code>, so the mapper skips those leading cells
-          instead of shifting answers. Choice ids are preserved so an imported
-          survey can be edited in SurveyJS. The builder toolbox is limited to
-          text, comment, checkbox, radiogroup, dropdown, matrix, and HTML.
+          conversion step. Question types from the old system map onto the
+          builder. Checkboxes expand to one column per choice. Matrix
+          questions flatten to one column per row. Some response files start
+          with a date field, so the mapper skips those leading cells instead
+          of shifting answers. Choice ids are preserved so an imported survey
+          can still be edited. The toolbox is limited to the question types
+          the reports know how to chart.
         </p>
         <p>
-          Custom toolbox questions are stored in MySQL as JSON and loaded into
-          SurveyJS. Reusing the same question name, such as
-          <code>first_name</code>, keeps reports aligned across schools even
-          when the visible title differs.
+          Custom toolbox questions are stored in the database and loaded into
+          the builder. Reusing the same internal question name keeps reports
+          aligned across schools even when the visible title differs.
         </p>
 
         <h2>Student access and response data</h2>
         <p>
-          A survey may require a password. When it does, staff upload a CSV of
-          first name, last name, password, and optional student number,
-          program, and email. An upload replaces the existing roster for that
-          survey. It runs in a transaction, validates headers, and rejects a
-          row with an invalid email. The taker looks up the password and fills
-          hidden fields named <code>first_name</code> or
-          <code>student_number</code> when those columns have values. Empty
-          cells are left empty.
+          A survey may require a password. When it does, staff upload a roster
+          of names, passwords, and optional student details. An upload
+          replaces the existing roster for that survey. It runs in a
+          transaction, checks the headers, and rejects a row with an invalid
+          email. The taker looks up the password and fills the matching hidden
+          fields. Empty cells are left empty.
         </p>
         <p>
           Emails sometimes arrive after responses have been submitted. A
-          backfill updates the roster and uses MySQL <code>JSON_SET</code> on
-          stored responses, matching on the password already in the JSON.
+          backfill updates the roster and writes the address onto stored
+          responses that already contain that password.
         </p>
-        <pre><code>$stmt = $pdo->prepare(
-  'UPDATE survey_responses
-      SET json_schema = JSON_SET(json_schema, "$.email", ?)
-    WHERE survey_id = ?
-      AND (
-        JSON_UNQUOTE(JSON_EXTRACT(json_schema, "$.password")) = ?
-        OR JSON_UNQUOTE(JSON_EXTRACT(json_schema, "$.Password")) = ?
-      )'
-);</code></pre>
         <p>
-          Exports keep question order from the schema, including checkbox
-          choice order, so a CSV can be downloaded and uploaded again without
-          column drift. Names with apostrophes and accented characters are
-          written through a UTF-8 endpoint.
+          Exports keep question order, including checkbox choice order, so a
+          file can be downloaded and uploaded again without column drift.
+          Names with apostrophes and accented characters are written as UTF-8.
         </p>
         <figure>
           <img
@@ -232,8 +197,8 @@ shareable PDF"]
           </figcaption>
         </figure>
         <p>
-          Nightly MySQL dumps are stored on the host. Restore selects a single
-          survey from a SQL zip instead of importing the full dump.
+          Nightly database dumps are stored on the host. Restore selects a
+          single survey from a backup instead of importing the full dump.
         </p>
 
         <h2>Reporting and PDF export</h2>
@@ -244,33 +209,20 @@ shareable PDF"]
           duplicated and renamed for a later year.
         </p>
         <p>
-          Comparison reports align questions across surveys. The matcher strips
-          leading numbers and punctuation, then runs Fuse.js on titles so
-          "4. I have a trusted adult at this school" can match
-          "I have a trusted adult at this school." Manual mapping is available
-          when a question was rewritten on purpose.
+          Comparison reports align questions across surveys. The matcher ignores
+          leading numbers and punctuation, then compares titles, so a numbered
+          question can match the same wording without the number. Manual
+          mapping is available when a question was rewritten on purpose.
         </p>
         <p>
           Page templates store empty chart frames. Advanced templates also
           store which question name feeds each chart. Comparison templates
           store the side-by-side layout.
         </p>
-        <div class="diagram mermaid" role="img" aria-label="PDF report pipeline">
-flowchart TB
-  aligned["Aligned questions
-exact, then Fuse.js"] --> html["Chart + table HTML"]
-  html --> canvas["html2canvas"]
-  canvas --> jspdf["jsPDF pages
-header, footer
-letter, 8.5 x 11"]
-  jspdf --> file["/report/slug.pdf
-view_count, last_visited"]
-        </div>
         <p>
-          html2canvas and jsPDF produce a letter-size document with a repeating
-          header and footer. Saving the file issues a shareable slug, serves
-          <code>application/pdf</code> inline, and increments a view count.
-          Report URLs are sent with a noindex robots header.
+          The export is a letter-size PDF with a repeating header and footer.
+          Saving it issues a shareable link, shows the file in the browser,
+          and counts views. Report links are kept out of search indexes.
         </p>
         <figure>
           <img
@@ -286,43 +238,37 @@ view_count, last_visited"]
         <h2>Notable security features</h2>
         <ul>
           <li>
-            Admin state-changing requests require a CSRF token in the
-            <code>X-CSRF-TOKEN</code> header or the <code>XSRF-TOKEN</code>
-            cookie, compared with the session token using
-            <code>hash_equals</code>.
+            Admin changes require a CSRF token checked against the session.
           </li>
           <li>
-            Logins use <code>password_verify</code> against stored hashes and
-            return a generic error so valid emails cannot be enumerated.
+            Passwords are stored as hashes. A failed login returns a generic
+            error so valid emails cannot be enumerated.
           </li>
           <li>
             Session cookies are HttpOnly, Secure on HTTPS, and SameSite Lax.
           </li>
           <li>
             Database access uses prepared statements. Roster names, emails, and
-            student numbers are never concatenated into SQL.
+            student numbers are never concatenated into queries.
           </li>
           <li>
-            Responses set <code>X-Content-Type-Options: nosniff</code>,
-            <code>X-Frame-Options: SAMEORIGIN</code>, and a Content-Security-Policy.
-            CORS is limited to an allowlist of site origins.
+            Responses send standard browser hardening headers, and cross-origin
+            access is limited to known site origins.
           </li>
           <li>
-            Uploads are rejected when the request body exceeds
-            <code>post_max_size</code>. PDF uploads are checked with
-            <code>finfo</code> before they are written to disk.
+            Oversized uploads are rejected. PDF uploads are checked for file
+            type before they are written to disk.
           </li>
           <li>
-            Backup restore runs filenames through <code>basename</code> and
-            <code>realpath</code> so a path cannot leave the backup directory.
+            Backup restore refuses a path that leaves the backup directory.
           </li>
           <li>
-            CSV roster uploads validate required headers and email format
-            inside a transaction. Invalid rows abort the replace.
+            Roster uploads check required headers and email format inside a
+            transaction. Invalid rows abort the replace.
           </li>
           <li>
-            Shared PDF links are noindexed. Surveys can be private, unlisted,
-            or public, with optional per-student passwords.
+            Shared PDF links are kept out of search indexes. Surveys can be
+            private, unlisted, or public, with optional per-student passwords.
           </li>
         </ul>
       </article>
