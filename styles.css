@@ -251,49 +251,6 @@ h3 {
   color: var(--muted);
 }
 
-/* Homepage bio */
-
-.bio {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.75rem;
-}
-
-.bio-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.portrait {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  margin-top: 0.55rem;
-  flex-shrink: 0;
-  transition: transform var(--lift), border-color var(--ease), box-shadow var(--lift);
-}
-
-.portrait:hover {
-  transform: translateY(-3px);
-  border-color: rgba(var(--accent-rgb), 0.4);
-  box-shadow: 0 10px 22px rgba(28, 25, 22, 0.07);
-}
-
-@media (max-width: 700px) {
-  .bio {
-    flex-direction: column-reverse;
-    gap: 1rem;
-  }
-
-  .portrait {
-    width: 96px;
-    height: 96px;
-    margin-top: 0;
-  }
-}
-
 /* Skills */
 
 .skill-row {
@@ -1017,7 +974,6 @@ a.still:focus-visible img {
   }
 
   .logo:hover svg,
-  .portrait:hover,
   .more a:hover svg,
   .more a:focus-visible svg,
   .nav-social a:hover svg,
