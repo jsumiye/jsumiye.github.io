@@ -125,9 +125,10 @@ a:focus-visible {
 }
 
 .logo svg {
-  width: 18px;
+  width: 24px;
   height: 24px;
   display: block;
+  overflow: visible;
   transform-origin: bottom center;
   transition: transform 220ms ease;
 }
